@@ -10,8 +10,8 @@ public:
     CubeController();
     virtual ~CubeController();
 
-    virtual void updatePacman();
-    virtual void updateGhost();
+    virtual void movePacman();
+    virtual void moveGhost();
 private:
 
 };

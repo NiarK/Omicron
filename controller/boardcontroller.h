@@ -10,8 +10,8 @@ public:
     BoardController(unsigned int width, unsigned int height);
     virtual ~BoardController();
 
-    virtual void updatePacman();
-    virtual void updateGhost();
+    virtual void movePacman();
+    virtual void moveGhost();
 
     // --- Accessor --- //
     unsigned int getWidth();

@@ -22,8 +22,8 @@ public:
     unsigned int getPacman() const;
     std::vector<unsigned int> getGhost() const;
 
-    virtual void updatePacman() = 0;
-    virtual void updateGhost() = 0;
+    virtual void movePacman() = 0;
+    virtual void moveGhost() = 0;
 
 protected:
     HyperCube * getAdjacencyMatrix();

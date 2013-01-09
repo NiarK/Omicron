@@ -12,12 +12,12 @@ CubeController::~CubeController()
 
 }
 
-void CubeController::updatePacman()
+void CubeController::movePacman()
 {
 
 }
 
-void CubeController::updateGhost()
+void CubeController::moveGhost()
 {
 
 }

@@ -39,12 +39,12 @@ std::vector<unsigned int> BoardController::createSizeByDimensionVector(unsigned 
     return sizeByDimension;
 }
 
-void BoardController::updatePacman()
+void BoardController::movePacman()
 {
 
 }
 
-void BoardController::updateGhost()
+void BoardController::moveGhost()
 {
 
 }

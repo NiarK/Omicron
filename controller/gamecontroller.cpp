@@ -63,9 +63,37 @@ unsigned int GameController::getVertexNumber() const
 
 unsigned int GameController::generatePosition()
 {
+    // génération de la position aléatoire
     unsigned int high = this->getVertexNumber();
-    unsigned int low = 0;
-    return qrand() % ((high + 1) - low) + low;
+    //unsigned int low = 0;
+
+    bool isSamePosition;
+    unsigned int ghostNumber = _ghosts.size();
+
+    unsigned int pos;
+
+    do
+    {
+        isSamePosition = false;
+
+        pos = qrand() % high;//((high + 1) - low) + low;
+
+        if( pos == _pacman )
+        {
+            isSamePosition = true;
+        }
+
+        for( unsigned int i = 0; !isSamePosition && i < ghostNumber; ++i )
+        {
+            if( pos == _ghosts[i] )
+            {
+                isSamePosition = true;
+            }
+        }
+
+    }while(isSamePosition);
+
+    return pos;
 }
 
 unsigned int GameController::getPacman() const
