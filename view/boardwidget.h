@@ -1,7 +1,9 @@
 #ifndef BOARDWIDGET_H
 #define BOARDWIDGET_H
 
+// --- Include Omicron --- //
 #include "game.h"
+#include "controller/boardcontroller.h"
 
 class BoardWidget : public Game
 {

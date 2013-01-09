@@ -4,24 +4,26 @@
 Menu::Menu(QWidget *parent) :
     QWidget(parent),
     _btnBoard(0),
-    _btnDonut(0),
+    //_btnDonut(0),
     _btnCube(0),
     _btnTesseract(0)
 {
     _btnBoard     = new QPushButton("->", this);
-    _btnDonut     = new QPushButton("->", this);
+    //_btnDonut     = new QPushButton("->", this);
     _btnCube      = new QPushButton("->", this);
     _btnTesseract = new QPushButton("->", this);
 
-    _btnDonut->setEnabled(false);
-    _btnCube->setEnabled(false);
+    //_btnDonut->setEnabled(false);
+    //_btnCube->setEnabled(false);
     _btnTesseract->setEnabled(false);
 
     QLabel *lblBoard = new QLabel("Plateau", this);
     lblBoard->setFont(QFont("Verdana", 30));
 
+    /*
     QLabel *lblDonut = new QLabel("Donut", this);
     lblDonut->setFont(QFont("Verdana", 30));
+    //*/
 
     QLabel *lblCube = new QLabel("Cube", this);
     lblCube->setFont(QFont("Verdana", 30));
@@ -38,10 +40,12 @@ Menu::Menu(QWidget *parent) :
     lytBoard->addWidget(line);
     lytBoard->addWidget(_btnBoard);
 
+    /*
     QHBoxLayout * lytDonut = new QHBoxLayout();
     lytDonut->addWidget(lblDonut);
     lytDonut->addWidget(line);
     lytDonut->addWidget(_btnDonut);
+    //*/
 
     QHBoxLayout * lytCube = new QHBoxLayout();
     lytCube->addWidget(lblCube);
@@ -55,24 +59,37 @@ Menu::Menu(QWidget *parent) :
 
     QVBoxLayout * layout = new QVBoxLayout(this);
     layout->addLayout(lytBoard);
-    layout->addLayout(lytDonut);
+    //layout->addLayout(lytDonut);
     layout->addLayout(lytCube);
     layout->addLayout(lytTesseract);
 
     this->setLayout(layout);
 
-    QObject::connect(_btnBoard, SIGNAL(clicked()), this, SLOT(emitBoardClicked()));
+    QObject::connect(_btnBoard, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    QObject::connect(_btnCube, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    QObject::connect(_btnTesseract, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
 }
 
 Menu::~Menu()
 {
     delete _btnBoard;
-    delete _btnDonut;
+    //delete _btnDonut;
     delete _btnCube;
     delete _btnTesseract;
 }
 
-void Menu::emitBoardClicked()
+void Menu::emitFieldChoosed()
 {
-    emit boardClicked();
+    if(QObject::sender() == _btnBoard)
+    {
+        emit fieldChoosed(Field::BOARD);
+    }
+    else if(QObject::sender() == _btnCube)
+    {
+        emit fieldChoosed(Field::CUBE);
+    }
+    else if(QObject::sender() == _btnTesseract)
+    {
+        emit fieldChoosed(Field::TESSERACT);
+    }
 }

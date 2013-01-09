@@ -60,6 +60,13 @@ HyperCube::HyperCube(const std::vector<unsigned int> & sizeByDimension, bool inf
     // --- Algorithme --- //
     for( unsigned int v = 0; v < vertex; ++v) // on parcours tous les sommets (toutes les lignes de la matrice d'adjacence) pour y ajouter ses liaisons
     {
+        // Initialisation de la matrice à 0
+        unsigned int size = this->size2();
+        for(unsigned int i = 0; i < size; ++i)
+        {
+            (*this)(v,i) = 0;
+        }
+
         for( unsigned int d = 0; d < dimension; ++d) // parcours les dimensions car il y a 2 arcs (max) a ajouter par dimension
         {
             if( (int)( v % vertexByDimension[d+1] ) - (int)vertexByDimension[d] >= 0) // gere les effets de bords inferieurs : s'assure que l'arc ne va pas lié un noeud avec un autre d'une dimension inferieure
@@ -103,13 +110,13 @@ HyperCube::~HyperCube()
 unsigned int HyperCube::calculateVertexNumber(const std::vector<unsigned int> & sizeByDimension)
 {
     unsigned int size = sizeByDimension.size();
-    unsigned int verticesNumber = 1;
+    unsigned int vertex = 1;
 
     for(unsigned int i = 0; i < size; ++i)
     {
-        verticesNumber *= sizeByDimension[i];
+        vertex *= sizeByDimension[i];
     }
 
-    return verticesNumber;
+    return vertex;
 }
 

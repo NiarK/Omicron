@@ -35,20 +35,26 @@ void MainWindow::initializeMenu()
 
     this->setCentralWidget(_menu);
 
-    QObject::connect(_menu, SIGNAL(boardClicked()), this, SLOT(initializeGameBoard()));
+    QObject::connect(_menu, SIGNAL(fieldChoosed(Field)), this, SLOT(initializeGame(Field)));
 }
 
-void MainWindow::initializeGameBoard()
-{
-    initializeGame(Map::BOARD);
-}
-
-void MainWindow::initializeGame(Map map)
+void MainWindow::initializeGame(Field field)
 {
     if(!_game)
     {
-        _game = new BoardWidget(8,8,this);
-        //_game = new CubeWidget(this);
+        switch(field)
+        {
+        case Field::BOARD:
+            _game = new BoardWidget(8,8,this);
+            break;
+        case Field::CUBE:
+            _game = new CubeWidget(this);
+            break;
+        case Field::TESSERACT:
+            _game = new CubeWidget(this);
+            break;
+
+        }
     }
 
     if(_menu)

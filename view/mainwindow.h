@@ -13,18 +13,11 @@
 #include <vector>
 
 // --- Include Omicron --- //
+#include "view/field.h"
 #include "view/menu.h"
 #include "view/game.h"
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
-
-enum class Map
-{
-    BOARD,
-    DONUT,
-    CUBE,
-    TESSERACT
-};
 
 class MainWindow : public QMainWindow
 {
@@ -38,10 +31,9 @@ signals:
 
 public slots:
     void initializeMenu();
-    void initializeGameBoard();
+    void initializeGame(Field field);
 
 private:
-    void initializeGame(Map map);
 
     Menu* _menu;
     Game* _game;

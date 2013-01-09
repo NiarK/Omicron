@@ -1,28 +1,29 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <vector>
-#include <stdexcept>
+// --- Include Omicron --- //
+#include "controller/gamecontroller.h"
 
-#include "model/hypercube.h"
-
-class GameController
+class BoardController : public GameController
 {
 public:
-    GameController(unsigned int width, unsigned int height);
-    ~GameController();
+    BoardController(unsigned int width, unsigned int height);
+    virtual ~BoardController();
+
+    virtual void updatePacman();
+    virtual void updateGhost();
 
     // --- Accessor --- //
-    HyperCube * getAdjacencyMatrix() const;
     unsigned int getWidth();
     unsigned int getHeight();
-    unsigned int getVertexNumber();
-    std::vector<unsigned int> getEdge(unsigned int vertex);
+
+protected:
 
 private:
+    std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
+
     unsigned int _width;
     unsigned int _height;
-    HyperCube * _matrix;
 };
 
 #endif // BOARD_H

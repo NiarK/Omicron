@@ -14,7 +14,7 @@
 #include <vector>
 
 // --- Include Omicron --- //
-#include "controller/GameController.h"
+#include "controller/gamecontroller.h"
 
 class Game : public QWidget
 {
@@ -23,11 +23,6 @@ public:
     explicit Game(QWidget *parent = 0);
     virtual ~Game();
 
-    //void setVertex(const std::vector<QGraphicsEllipseItem*> & vertex);
-
-   /* std::vector<QGraphicsEllipseItem*>::iterator getVertexIterator();
-    std::vector<QGraphicsEllipseItem*>::iterator getVertexEndIterator();*/
-    void setController(GameController * gc);
 
     virtual void positionVertex(std::vector<QGraphicsEllipseItem*>::iterator vertexIt,
                                 std::vector<QGraphicsEllipseItem*>::iterator endVertexIt) const = 0;
@@ -44,13 +39,20 @@ public slots:
     void emitReturnClicked() const;
 
 protected:
-    GameController * getController() const;
+    GameController *getController() const;
+    void setController(GameController * gc);
 
 private:
+
+    virtual void updatePacman();
+    virtual void updateGhost();
 
     QPushButton* _return;
 
     std::vector<QGraphicsEllipseItem*> _vertex;
+    QGraphicsEllipseItem* _pacman;
+    std::vector<QGraphicsEllipseItem*> _ghosts;
+
     GameController * _gameController;
 
     QGraphicsScene* _scene;

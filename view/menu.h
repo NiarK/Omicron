@@ -1,11 +1,15 @@
 #ifndef MENU_H
 #define MENU_H
 
+// --- Include Qt --- //
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
+
+// --- include Omicron --- //
+#include "view/field.h"
 
 class Menu : public QWidget
 {
@@ -15,14 +19,14 @@ public:
     virtual  ~Menu();
     
 signals:
-    void boardClicked();
+    void fieldChoosed(Field m);
     
 public slots:
-    void emitBoardClicked();
+    void emitFieldChoosed();
 
 private:
     QPushButton* _btnBoard;
-    QPushButton* _btnDonut;
+    //QPushButton* _btnDonut;
     QPushButton* _btnCube;
     QPushButton* _btnTesseract;
 

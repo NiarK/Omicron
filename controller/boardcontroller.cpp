@@ -1,59 +1,50 @@
-#include "controller/GameController.h"
+#include "controller/boardcontroller.h"
 
-GameController::GameController(unsigned int width, unsigned int height) :
+BoardController::BoardController(unsigned int width, unsigned int height) :
+    GameController(this->createSizeByDimensionVector(width, height), false, 2),
     _width(width),
-    _height(height),
-    _matrix(0)
+    _height(height)
 {
-    std::vector<unsigned int> sizeByDimension;
+    /*std::vector<unsigned int> sizeByDimension;
     sizeByDimension.push_back(width);
     sizeByDimension.push_back(height);
 
-    _matrix = new HyperCube(sizeByDimension, false);
+    _matrix = new HyperCube(sizeByDimension, false);*/
 }
 
-GameController::~GameController()
+BoardController::~BoardController()
 {
-    delete _matrix;
-}
-//TODO enlever ça !
-HyperCube *GameController::getAdjacencyMatrix() const
-{
-    return _matrix;
+    //GameController::~GameController();
 }
 
-unsigned int GameController::getWidth()
+unsigned int BoardController::getWidth()
 {
     return _width;
 }
 
-unsigned int GameController::getHeight()
+unsigned int BoardController::getHeight()
 {
     return _height;
 }
 
-unsigned int GameController::getVertexNumber()
+
+
+std::vector<unsigned int> BoardController::createSizeByDimensionVector(unsigned int width, unsigned int height)
 {
-    return _height * _width;
+    std::vector<unsigned int> sizeByDimension;
+
+    sizeByDimension.push_back(width);
+    sizeByDimension.push_back(height);
+
+    return sizeByDimension;
 }
 
-std::vector<unsigned int> GameController::getEdge(unsigned int vertex)
+void BoardController::updatePacman()
 {
-    if(vertex >= _matrix->size1())
-    {
-        throw std::bad_alloc();
-    }
 
-    unsigned int size = _matrix->size1();
-    std::vector<unsigned int> edge;
+}
 
-    for( unsigned int i = 0; i < size; ++i )
-    {
-        if( (*_matrix)( vertex, i ) == 1 )
-        {
-            edge.push_back(i);
-        }
-    }
+void BoardController::updateGhost()
+{
 
-    return edge;
 }

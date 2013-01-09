@@ -5,7 +5,7 @@ BoardWidget::BoardWidget(unsigned int width, unsigned int height, QWidget *paren
     _width(width),
     _height(height)
 {
-    this->setController(new GameController(width, height));
+    this->setController(new BoardController(width, height));
 
     /*std::vector<QGraphicsEllipseItem*>::iterator it = this->getVertexIterator();
     std::vector<QGraphicsEllipseItem*>::iterator end = this->getVertexEndIterator();

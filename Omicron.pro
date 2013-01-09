@@ -19,8 +19,10 @@ SOURCES += main.cpp\
     view/menu.cpp \
     view/game.cpp \
     view/boardwidget.cpp \
-    controller/GameController.cpp \
-    view/cubewidget.cpp
+    view/cubewidget.cpp \
+    controller/gamecontroller.cpp \
+    controller/boardcontroller.cpp \
+    controller/cubecontroller.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -28,5 +30,8 @@ HEADERS  += \
     view/menu.h \
     view/game.h \
     view/boardwidget.h \
-    controller/GameController.h \
-    view/cubewidget.h
+    view/cubewidget.h \
+    controller/gamecontroller.h \
+    controller/boardcontroller.h \
+    controller/cubecontroller.h \
+    view/field.h
