@@ -51,7 +51,7 @@ void MainWindow::initializeGame(Field field)
             _game = new CubeWidget(this);
             break;
         case Field::TESSERACT:
-            _game = new CubeWidget(this);
+            _game = new TesseractWidget(this);
             break;
 
         }

@@ -15,7 +15,7 @@ Menu::Menu(QWidget *parent) :
 
     //_btnDonut->setEnabled(false);
     //_btnCube->setEnabled(false);
-    _btnTesseract->setEnabled(false);
+    //_btnTesseract->setEnabled(false);
 
     QLabel *lblBoard = new QLabel("Plateau", this);
     lblBoard->setFont(QFont("Verdana", 30));

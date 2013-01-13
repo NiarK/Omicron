@@ -21,7 +21,7 @@ public:
     unsigned int getDimension() const;
 
     virtual unsigned int range(unsigned int vertex1, unsigned int vertex2) const;
-    unsigned int rangeByDimension(unsigned int vertex1, unsigned int vertex2) const;
+    std::vector<unsigned int> rangeByDimension(unsigned int vertex1, unsigned int vertex2) const;
 
 private:
     static unsigned int calculateVertexNumber(const std::vector<unsigned int> & sizeByDimension);
