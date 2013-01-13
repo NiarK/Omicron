@@ -64,7 +64,9 @@ void MainWindow::initializeGame(Field field)
     }
 
     this->setCentralWidget(_game);
+    this->centralWidget()->setFocus();
 
     QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
 }
+
 

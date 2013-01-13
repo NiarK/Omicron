@@ -2,10 +2,10 @@
 #define CUBEWIDGET_H
 
 // --- Include Omicron --- //
-#include "view/game.h"
+#include "view/gamewidget.h"
 #include "controller/cubecontroller.h"
 
-class CubeWidget : public Game
+class CubeWidget : public GameWidget
 {
     Q_OBJECT
 public:
@@ -15,7 +15,7 @@ public:
 
     virtual void positionVertex(std::vector<QGraphicsEllipseItem*>::iterator vertexIt,
                                 std::vector<QGraphicsEllipseItem*>::iterator endVertexIt) const;
-    
+
 signals:
     
 public slots:

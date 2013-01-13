@@ -18,4 +18,5 @@ int main(int argc, char *argv[])
 }
 
 
-//TODO: initialiser matrice ?
+//TODO: initialiser matrice ? v
+// verif que le rand ne oit pas tjs le meme

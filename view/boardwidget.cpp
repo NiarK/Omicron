@@ -1,7 +1,7 @@
 #include "boardwidget.h"
 
 BoardWidget::BoardWidget(unsigned int width, unsigned int height, QWidget *parent) :
-    Game(parent),
+    GameWidget(parent),
     _width(width),
     _height(height)
 {
@@ -48,7 +48,7 @@ void BoardWidget::positionVertex(std::vector<QGraphicsEllipseItem*>::iterator ve
 
     for(int i = 0; vertexIt != endVertexIt; ++vertexIt, ++i)
     {
-        (*vertexIt)->setPos( i % _width * (Game::SPACING + Game::RADIUS), i / _width * (Game::SPACING + Game::RADIUS) );
+        (*vertexIt)->setPos( i % _width * (GameWidget::SPACING + GameWidget::RADIUS), i / _width * (GameWidget::SPACING + GameWidget::RADIUS) );
     }
 }
 

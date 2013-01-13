@@ -2,8 +2,16 @@
 
 GameController::GameController(const std::vector<unsigned int> &sizeByDimension, bool infinite, unsigned int ghost) :
     _pacman(0),
-    _ghosts()
+    _ghosts(),
+    _pacmanMoved(false),
+    _movementCounter(0),
+    _matrix(0)
+    //_vertexNumber(0)
 {
+    // Initialisation du random
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
+
     _matrix = new HyperCube(sizeByDimension, infinite);
 
     _pacman = this->generatePosition();
@@ -34,7 +42,7 @@ HyperCube *GameController::getAdjacencyMatrix()
     return _matrix;
 }
 
-std::vector<unsigned int> GameController::getEdges(unsigned int vertex)
+std::vector<unsigned int> GameController::getEdges(unsigned int vertex) const
 {
     if(vertex >= _matrix->size1())
     {
@@ -104,4 +112,30 @@ unsigned int GameController::getPacman() const
 std::vector<unsigned int> GameController::getGhost() const
 {
     return _ghosts;
+}
+
+
+void GameController::nextMove()
+{
+    //Actor a;
+
+    if(!_pacmanMoved)
+    {
+        this->movePacman();
+      //  a = Actor::PACMAN;
+    }
+    else
+    {
+        this->moveGhost();
+        ++_movementCounter;
+       // a = Actor::GHOST;
+    }
+
+    _pacmanMoved = !_pacmanMoved;
+   // return a;
+}
+
+unsigned int GameController::getMovementCounter() const
+{
+    return _movementCounter;
 }

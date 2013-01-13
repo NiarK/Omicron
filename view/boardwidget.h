@@ -2,10 +2,10 @@
 #define BOARDWIDGET_H
 
 // --- Include Omicron --- //
-#include "game.h"
+#include "gamewidget.h"
 #include "controller/boardcontroller.h"
 
-class BoardWidget : public Game
+class BoardWidget : public GameWidget
 {
     Q_OBJECT
 public:

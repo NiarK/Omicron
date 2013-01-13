@@ -41,10 +41,18 @@ std::vector<unsigned int> BoardController::createSizeByDimensionVector(unsigned 
 
 void BoardController::movePacman()
 {
-
+    _pacman++;
+    if(_pacman >= this->getVertexNumber())
+    {
+        _pacman = 0;
+    }
 }
 
 void BoardController::moveGhost()
 {
-
+    _ghosts[0]++;
+    if(_ghosts[0] >= this->getVertexNumber())
+    {
+        _ghosts[0] = 0;
+    }
 }

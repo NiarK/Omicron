@@ -38,7 +38,10 @@
 }*/
 
 HyperCube::HyperCube(const std::vector<unsigned int> & sizeByDimension, bool infinite) :
-    Matrix(0,0)
+    Matrix(0,0),
+    _sizeByDimension(sizeByDimension),
+    _vertexByDimension(),
+    _infinite(infinite)
 {
     // --- Initialisation --- //
     // calcule le nombre de noeuds
@@ -50,11 +53,10 @@ HyperCube::HyperCube(const std::vector<unsigned int> & sizeByDimension, bool inf
     unsigned int dimension = sizeByDimension.size();
 
     // Créer un tableau contenant le nombre de noeuds en jeu pour chaque dimension
-    std::vector<unsigned int> vertexByDimension;
-    vertexByDimension.push_back(1); // Dimension 0 -> 1 noeud
+    _vertexByDimension.push_back(1); // Dimension 0 -> 1 noeud
     for(unsigned int i = 0; i < dimension; ++i)
     {
-        vertexByDimension.push_back( vertexByDimension[i] * sizeByDimension[i] );
+        _vertexByDimension.push_back( _vertexByDimension[i] * sizeByDimension[i] );
     }
 
     // --- Algorithme --- //
@@ -69,22 +71,22 @@ HyperCube::HyperCube(const std::vector<unsigned int> & sizeByDimension, bool inf
 
         for( unsigned int d = 0; d < dimension; ++d) // parcours les dimensions car il y a 2 arcs (max) a ajouter par dimension
         {
-            if( (int)( v % vertexByDimension[d+1] ) - (int)vertexByDimension[d] >= 0) // gere les effets de bords inferieurs : s'assure que l'arc ne va pas lié un noeud avec un autre d'une dimension inferieure
+            if( (int)( v % _vertexByDimension[d+1] ) - (int)_vertexByDimension[d] >= 0) // gere les effets de bords inferieurs : s'assure que l'arc ne va pas lié un noeud avec un autre d'une dimension inferieure
             {
-                (*this)( v, v - vertexByDimension[d]) = 1; // ajout de l'arc inferieur
+                (*this)( v, v - _vertexByDimension[d]) = 1; // ajout de l'arc inferieur
             }
             else if (infinite) // Si la map doit reboucler sur elle meme
             {
-                (*this)( v, v + (vertexByDimension[d+1] - vertexByDimension[d]) ) = 1; // On ajoute l'arc entre les noeuds correspondant
+                (*this)( v, v + (_vertexByDimension[d+1] - _vertexByDimension[d]) ) = 1; // On ajoute l'arc entre les noeuds correspondant
             }
 
-            if( v % vertexByDimension[d+1] + vertexByDimension[d] < vertexByDimension[d+1]) // gere les effets de bords superieurs : s'assure que l'arc ne va pas lié un noeud avec un autre d'une dimension supérieure
+            if( v % _vertexByDimension[d+1] + _vertexByDimension[d] < _vertexByDimension[d+1]) // gere les effets de bords superieurs : s'assure que l'arc ne va pas lié un noeud avec un autre d'une dimension supérieure
             {
-                (*this)( v, v + vertexByDimension[d]) = 1; // ajout de l'arc superieur
+                (*this)( v, v + _vertexByDimension[d]) = 1; // ajout de l'arc superieur
             }
             else if (infinite) // Si la map doit rebouvcler sur elle meme
             {
-                (*this)( v, v - (vertexByDimension[d+1] - vertexByDimension[d]) ) = 1; // On ajoute l'arc entre les noeuds correspondant
+                (*this)( v, v - (_vertexByDimension[d+1] - _vertexByDimension[d]) ) = 1; // On ajoute l'arc entre les noeuds correspondant
             }
         }
     }
@@ -120,3 +122,61 @@ unsigned int HyperCube::calculateVertexNumber(const std::vector<unsigned int> & 
     return vertex;
 }
 
+
+unsigned int HyperCube::range(unsigned int vertex1, unsigned int vertex2) const
+{
+    unsigned int dimension = this->getDimension();
+    unsigned int v1 = vertex1;
+    unsigned int v2 = vertex2;
+    unsigned int range = 0;
+    int rangeAdded = 0;
+
+    for(unsigned int d = dimension; d > 0; ++d)
+    {
+        rangeAdded += v1 / _vertexByDimension[dimension] - v2 / _vertexByDimension[dimension];
+
+        if(rangeAdded < 0)
+        {
+            rangeAdded *= -1;
+        }
+
+        range += rangeAdded;
+
+        v1 %= _vertexByDimension[dimension - 1];
+        v2 %= _vertexByDimension[dimension - 1];
+    }
+
+    return range;
+}
+
+unsigned int HyperCube::rangeByDimension(unsigned int vertex1, unsigned int vertex2) const
+{
+    //TODO some stuff
+    unsigned int dimension = this->getDimension();
+    unsigned int v1 = vertex1;
+    unsigned int v2 = vertex2;
+    unsigned int range = 0;
+    int rangeAdded = 0;
+
+    for(unsigned int d = dimension; d > 0; ++d)
+    {
+        rangeAdded += v1 / _vertexByDimension[dimension] - v2 / _vertexByDimension[dimension];
+
+        if(rangeAdded < 0)
+        {
+            rangeAdded *= -1;
+        }
+
+        range += rangeAdded;
+
+        v1 %= _vertexByDimension[dimension - 1];
+        v2 %= _vertexByDimension[dimension - 1];
+    }
+
+    return range;
+}
+
+unsigned int HyperCube::getDimension() const
+{
+    return _sizeByDimension.size();
+}

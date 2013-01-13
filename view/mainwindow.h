@@ -15,7 +15,7 @@
 // --- Include Omicron --- //
 #include "view/field.h"
 #include "view/menu.h"
-#include "view/game.h"
+#include "view/gamewidget.h"
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
 
@@ -33,10 +33,12 @@ public slots:
     void initializeMenu();
     void initializeGame(Field field);
 
+protected:
+
 private:
 
     Menu* _menu;
-    Game* _game;
+    GameWidget* _game;
 
 };
 

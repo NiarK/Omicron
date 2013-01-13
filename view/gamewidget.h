@@ -8,7 +8,11 @@
 #include <QGraphicsEllipseItem>
 
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
+#include <QLabel>
+
+#include <QKeyEvent>
 
 // --- Include std --- //
 #include <vector>
@@ -16,12 +20,12 @@
 // --- Include Omicron --- //
 #include "controller/gamecontroller.h"
 
-class Game : public QWidget
+class GameWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Game(QWidget *parent = 0);
-    virtual ~Game();
+    explicit GameWidget(QWidget *parent = 0);
+    virtual ~GameWidget();
 
 
     virtual void positionVertex(std::vector<QGraphicsEllipseItem*>::iterator vertexIt,
@@ -29,25 +33,31 @@ public:
     virtual void linkVertex(QGraphicsScene * _scene,
                             const std::vector<QGraphicsEllipseItem*> & vertex) const;
 
-    static const int SPACING = 10;
-    static const int RADIUS = 40;
+    static const int SPACING = 30;
+    static const int RADIUS = 20;
+    static const int THICK = 2;
 
 signals:
     void returnClicked() const;
 
 public slots:
     void emitReturnClicked() const;
+    void nextMove();
 
 protected:
     GameController *getController() const;
     void setController(GameController * gc);
+    virtual void keyPressEvent ( QKeyEvent * event );
 
 private:
 
     virtual void updatePacman();
     virtual void updateGhost();
+    virtual void updateActor();
 
-    QPushButton* _return;
+    QPushButton* _btnReturn;
+    QPushButton* _btnNextMove;
+    QLabel * _lblMovementGhostCounter;
 
     std::vector<QGraphicsEllipseItem*> _vertex;
     QGraphicsEllipseItem* _pacman;

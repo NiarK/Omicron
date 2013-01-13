@@ -17,21 +17,21 @@ SOURCES += main.cpp\
     model/hypercube.cpp \
     view/mainwindow.cpp \
     view/menu.cpp \
-    view/game.cpp \
     view/boardwidget.cpp \
     view/cubewidget.cpp \
     controller/gamecontroller.cpp \
     controller/boardcontroller.cpp \
-    controller/cubecontroller.cpp
+    controller/cubecontroller.cpp \
+    view/gamewidget.cpp
 
 HEADERS  += \
     model/hypercube.h \
     view/mainwindow.h \
     view/menu.h \
-    view/game.h \
     view/boardwidget.h \
     view/cubewidget.h \
     controller/gamecontroller.h \
     controller/boardcontroller.h \
     controller/cubecontroller.h \
-    view/field.h
+    view/field.h \
+    view/gamewidget.h

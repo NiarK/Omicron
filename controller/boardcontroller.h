@@ -10,8 +10,6 @@ public:
     BoardController(unsigned int width, unsigned int height);
     virtual ~BoardController();
 
-    virtual void movePacman();
-    virtual void moveGhost();
 
     // --- Accessor --- //
     unsigned int getWidth();
@@ -20,6 +18,8 @@ public:
 protected:
 
 private:
+    virtual void movePacman();
+    virtual void moveGhost();
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;

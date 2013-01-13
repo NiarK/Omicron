@@ -18,8 +18,17 @@ public:
     HyperCube(const std::vector<unsigned int> & sizeByDimension, bool infinite);
     ~HyperCube();
 
+    unsigned int getDimension() const;
+
+    virtual unsigned int range(unsigned int vertex1, unsigned int vertex2) const;
+    unsigned int rangeByDimension(unsigned int vertex1, unsigned int vertex2) const;
+
 private:
     static unsigned int calculateVertexNumber(const std::vector<unsigned int> & sizeByDimension);
+
+    std::vector<unsigned int> _sizeByDimension;
+    std::vector<unsigned int> _vertexByDimension;
+    bool _infinite;
 };
 
 

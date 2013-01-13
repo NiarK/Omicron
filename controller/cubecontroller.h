@@ -10,10 +10,9 @@ public:
     CubeController();
     virtual ~CubeController();
 
+private:
     virtual void movePacman();
     virtual void moveGhost();
-private:
-
 };
 
 #endif // CUBECONTROLLER_H
