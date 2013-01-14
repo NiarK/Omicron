@@ -123,7 +123,6 @@ bool GameController::nextMove()
     if(!_pacmanMoved)
     {
         this->movePacman();
-        std::cout << _matrix->range(_pacman, _ghosts[1]) << std::endl;
         //a = Actor::PACMAN;
     }
     else
