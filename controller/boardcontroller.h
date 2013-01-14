@@ -20,6 +20,8 @@ protected:
 private:
     virtual void movePacman();
     virtual void moveGhost();
+    virtual int rangeMin(int value);
+    virtual bool boardTest(int pos);
     virtual int range(int pos1, int pos2);
     virtual bool parityTest(int nb);
     virtual void calculateMovement(int nb);
