@@ -122,7 +122,12 @@ unsigned int HyperCube::calculateVertexNumber(const std::vector<unsigned int> & 
     return vertex;
 }
 
-
+/**
+ * @brief HyperCube::range permet de calculer la distance entre 2
+ * @param vertex1
+ * @param vertex2
+ * @return
+ */
 unsigned int HyperCube::range(unsigned int vertex1, unsigned int vertex2) const
 {
     unsigned int dimension = this->getDimension();
@@ -131,9 +136,9 @@ unsigned int HyperCube::range(unsigned int vertex1, unsigned int vertex2) const
     unsigned int range = 0;
     int rangeAdded = 0;
 
-    for(unsigned int d = dimension; d > 0; ++d)
+    for(int d = dimension - 1; d >= 0; --d)
     {
-        rangeAdded += v1 / _vertexByDimension[dimension] - v2 / _vertexByDimension[dimension];
+        rangeAdded = v1 / _vertexByDimension[d] - v2 / _vertexByDimension[d];
 
         if(rangeAdded < 0)
         {
@@ -142,35 +147,35 @@ unsigned int HyperCube::range(unsigned int vertex1, unsigned int vertex2) const
 
         range += rangeAdded;
 
-        v1 %= _vertexByDimension[dimension - 1];
-        v2 %= _vertexByDimension[dimension - 1];
+        v1 %= _vertexByDimension[d];
+        v2 %= _vertexByDimension[d];
     }
 
     return range;
 }
 
-unsigned int HyperCube::rangeByDimension(unsigned int vertex1, unsigned int vertex2) const
+std::vector<unsigned int> HyperCube::rangeByDimension(unsigned int vertex1, unsigned int vertex2) const
 {
     //TODO some stuff
     unsigned int dimension = this->getDimension();
     unsigned int v1 = vertex1;
     unsigned int v2 = vertex2;
-    unsigned int range = 0;
+    std::vector<unsigned int> range;
     int rangeAdded = 0;
 
-    for(unsigned int d = dimension; d > 0; ++d)
+    for(int d = dimension - 1; d >= 0; --d)
     {
-        rangeAdded += v1 / _vertexByDimension[dimension] - v2 / _vertexByDimension[dimension];
+        rangeAdded = v1 / _vertexByDimension[d] - v2 / _vertexByDimension[d];
 
         if(rangeAdded < 0)
         {
             rangeAdded *= -1;
         }
 
-        range += rangeAdded;
+        range.push_back(rangeAdded);
 
-        v1 %= _vertexByDimension[dimension - 1];
-        v2 %= _vertexByDimension[dimension - 1];
+        v1 %= _vertexByDimension[d];
+        v2 %= _vertexByDimension[d];
     }
 
     return range;

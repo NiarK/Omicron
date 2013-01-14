@@ -18,6 +18,7 @@
 #include "view/gamewidget.h"
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
+#include "view/tesseractwidget.h"
 
 class MainWindow : public QMainWindow
 {

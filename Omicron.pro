@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     controller/gamecontroller.cpp \
     controller/boardcontroller.cpp \
     controller/cubecontroller.cpp \
-    view/gamewidget.cpp
+    view/gamewidget.cpp \
+    controller/tesseractcontroller.cpp \
+    view/tesseractwidget.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -34,4 +36,6 @@ HEADERS  += \
     controller/boardcontroller.h \
     controller/cubecontroller.h \
     view/field.h \
-    view/gamewidget.h
+    view/gamewidget.h \
+    controller/tesseractcontroller.h \
+    view/tesseractwidget.h
