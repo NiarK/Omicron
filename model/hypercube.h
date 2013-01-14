@@ -26,7 +26,7 @@ public:
      */
     HyperCube(const std::vector<unsigned int> & sizeByDimension, bool infinite);
 
-    ~HyperCube();
+    virtual ~HyperCube();
 
     /**
      * @brief getDimension permet de récuperer le nombre de dimension.

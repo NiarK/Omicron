@@ -63,12 +63,19 @@ public:
      * @brief getMovementCounter recupère le nombre de coup joué par les ghosts depuis le debut.
      * @return le nombre de coup joué par les ghosts.
      */
-    unsigned int getMovementCounter() const;
+    unsigned int getGhostMovementCounter() const;
 
     /**
      * @brief nextMove permet de jouer le prochain coup.
      */
-    void nextMove();
+    bool nextMove();
+
+    /**
+     * @brief pacmanIsCatched permet de savoir si le pacman est attrapé par un ghost.
+     * @return un boolean qui indique si le pacman a perdu.
+     */
+    bool pacmanIsCatched();
+
 
 protected:
     /**

@@ -19,4 +19,4 @@ int main(int argc, char *argv[])
 
 
 //TODO: initialiser matrice ? v
-// verif que le rand ne oit pas tjs le meme
+// detructeur, appelé le parent ? je pense que oui

@@ -122,12 +122,7 @@ unsigned int HyperCube::calculateVertexNumber(const std::vector<unsigned int> & 
     return vertex;
 }
 
-/**
- * @brief HyperCube::range permet de calculer la distance entre 2
- * @param vertex1
- * @param vertex2
- * @return
- */
+
 unsigned int HyperCube::range(unsigned int vertex1, unsigned int vertex2) const
 {
     unsigned int dimension = this->getDimension();

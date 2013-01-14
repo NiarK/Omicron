@@ -40,21 +40,17 @@ void MainWindow::initializeMenu()
 
 void MainWindow::initializeGame(Field field)
 {
-    if(!_game)
-    {
-        switch(field)
-        {
-        case Field::BOARD:
-            _game = new BoardWidget(8,8,this);
-            break;
-        case Field::CUBE:
-            _game = new CubeWidget(this);
-            break;
-        case Field::TESSERACT:
-            _game = new TesseractWidget(this);
-            break;
+    _field = field;
 
-        }
+    this->initializeGame();
+}
+
+void MainWindow::initializeGame()
+{
+    if(_game)
+    {
+        delete _game;
+        _game = 0;
     }
 
     if(_menu)
@@ -63,10 +59,25 @@ void MainWindow::initializeGame(Field field)
         _menu = 0;
     }
 
+    switch(_field)
+    {
+    case Field::BOARD:
+        _game = new BoardWidget(8,8,this);
+        break;
+    case Field::CUBE:
+        _game = new CubeWidget(this);
+        break;
+    case Field::TESSERACT:
+        _game = new TesseractWidget(this);
+        break;
+    }
+
+
     this->setCentralWidget(_game);
     this->centralWidget()->setFocus();
 
     QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
+    QObject::connect(_game, SIGNAL(restartClicked()), this, SLOT(initializeGame()));
 }
 
 

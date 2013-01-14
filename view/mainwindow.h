@@ -33,6 +33,7 @@ signals:
 public slots:
     void initializeMenu();
     void initializeGame(Field field);
+    void initializeGame();
 
 protected:
 
@@ -40,6 +41,8 @@ private:
 
     Menu* _menu;
     GameWidget* _game;
+
+    Field _field;
 
 };
 

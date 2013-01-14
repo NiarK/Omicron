@@ -14,11 +14,14 @@
 
 #include <QKeyEvent>
 
+#include <QMessageBox>
+
 // --- Include std --- //
 #include <vector>
 
 // --- Include Omicron --- //
 #include "controller/gamecontroller.h"
+#include "view/field.h"
 
 class GameWidget : public QWidget
 {
@@ -39,6 +42,7 @@ public:
 
 signals:
     void returnClicked() const;
+    void restartClicked() const;
 
 public slots:
     void emitReturnClicked() const;

@@ -172,10 +172,30 @@ void GameWidget::keyPressEvent ( QKeyEvent * event )
 
 void GameWidget::nextMove()
 {
-    _gameController->nextMove();
+    bool gameFinished = _gameController->nextMove();
     this->updateActor();
 
     std::string text("Nombre de coup pour la capture : ");
-   // text += _gameController->getMovementCounter();
+    // text += _gameController->getMovementCounter();
     _lblMovementGhostCounter->setText("Nombre de coup pour la capture : ");
+
+    if(gameFinished)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Le Pacman a été attrapé !");
+        msgBox.setDetailedText("Le Pacman a été attrapé !");
+
+        QPushButton *btnRestart = msgBox.addButton(tr("Recommener"), QMessageBox::AcceptRole);
+        QPushButton *btnMenu = msgBox.addButton(tr("Revenir au menu"), QMessageBox::RejectRole);
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == btnRestart)
+        {
+            emit restartClicked();
+        }
+        else if (msgBox.clickedButton() == btnMenu)
+        {
+            emit returnClicked();
+        }
+    }
 }

@@ -115,28 +115,47 @@ std::vector<unsigned int> GameController::getGhost() const
 }
 
 
-void GameController::nextMove()
+bool GameController::nextMove()
 {
     //Actor a;
+    bool gameOver = false;
 
     if(!_pacmanMoved)
     {
         this->movePacman();
         std::cout << _matrix->range(_pacman, _ghosts[1]) << std::endl;
-      //  a = Actor::PACMAN;
+        //a = Actor::PACMAN;
     }
     else
     {
         this->moveGhost();
         ++_movementCounter;
-       // a = Actor::GHOST;
+        gameOver = pacmanIsCatched();
+        //a = Actor::GHOST;
     }
 
     _pacmanMoved = !_pacmanMoved;
-   // return a;
+
+    return gameOver;
 }
 
-unsigned int GameController::getMovementCounter() const
+unsigned int GameController::getGhostMovementCounter() const
 {
     return _movementCounter;
+}
+
+bool GameController::pacmanIsCatched()
+{
+    //TODO : ameliorer l'algo
+    unsigned int ghostNumber = _ghosts.size();
+
+    for(unsigned int i = 0; i < ghostNumber; ++i)
+    {
+        if( _ghosts[i] == _pacman )
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
