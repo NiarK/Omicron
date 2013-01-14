@@ -20,6 +20,9 @@ protected:
 private:
     virtual void movePacman();
     virtual void moveGhost();
+    virtual int range(int pos1, int pos2);
+    virtual bool parityTest(int nb);
+    virtual void calculateMovement(int nb);
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;
