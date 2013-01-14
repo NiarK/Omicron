@@ -182,8 +182,11 @@ void GameWidget::nextMove()
     if(gameFinished)
     {
         QMessageBox msgBox;
-        msgBox.setText("Le Pacman a été attrapé !");
-        msgBox.setDetailedText("Le Pacman a été attrapé !");
+        msgBox.setText("Le Pacman a �t� attrap� !");
+        QString text = "Les ghosts ont mis ";
+        text += QString("%1").arg( _gameController->getGhostMovementCounter() );
+        text += " coups pour attraper le Pacman";
+        msgBox.setDetailedText(text);
 
         QPushButton *btnRestart = msgBox.addButton(tr("Recommener"), QMessageBox::AcceptRole);
         QPushButton *btnMenu = msgBox.addButton(tr("Revenir au menu"), QMessageBox::RejectRole);
