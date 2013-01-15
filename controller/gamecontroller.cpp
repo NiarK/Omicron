@@ -5,6 +5,9 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
     _ghosts(),
     _pacmanMoved(false),
     _movementCounter(0),
+    _timePacmanIA(),
+    _timeGhostIA(),
+    _time(),
     _matrix(0)
     //_vertexNumber(0)
 {
@@ -122,12 +125,17 @@ bool GameController::nextMove()
 
     if(!_pacmanMoved)
     {
+        _time.restart();
         this->movePacman();
+        _timePacmanIA.push_back(_time.elapsed());
         //a = Actor::PACMAN;
     }
     else
     {
+        _time.restart();
         this->moveGhost();
+        _timeGhostIA.push_back(_time.elapsed());
+
         ++_movementCounter;
         gameOver = pacmanIsCatched();
         //a = Actor::GHOST;
@@ -157,4 +165,44 @@ bool GameController::pacmanIsCatched()
     }
 
     return false;
+}
+
+
+unsigned int GameController::getAveragePacmanIATime()
+{
+    unsigned int avg = 0;
+    unsigned int sum = 0;
+    unsigned int size = _timePacmanIA.size();
+
+    if(size != 0)
+    {
+        for(unsigned int i = 0; i < size; ++i)
+        {
+            sum += _timePacmanIA[i];
+        }
+
+        avg = sum / size;
+    }
+
+    return avg;
+
+}
+
+unsigned int GameController::getAverageGhostIATime()
+{
+    unsigned int avg = 0;
+    unsigned int sum = 0;
+    unsigned int size = _timeGhostIA.size();
+
+    if(size != 0)
+    {
+        for(unsigned int i = 0; i < size; ++i)
+        {
+            sum += _timeGhostIA[i];
+        }
+
+        avg = sum / size;
+    }
+
+    return avg;
 }

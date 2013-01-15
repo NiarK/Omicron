@@ -185,12 +185,20 @@ void GameWidget::nextMove()
         msgBox.setText("Le Pacman a été attrapé !");
         QString text = "Les ghosts ont mis ";
         text += QString("%1").arg( _gameController->getGhostMovementCounter() );
-        text += " coups pour attraper le Pacman";
+        text += " coups pour attraper le Pacman.\n";
+        text += "En moyenne le pacman réfléchissait pendant : ";
+        text += QString("%1").arg( _gameController->getAveragePacmanIATime() );
+        text += " ms.\n";
+        text += "En moyenne les ghosts réfléchissaient pendant : ";
+        text += QString("%1").arg( _gameController->getAverageGhostIATime() );
+        text += " ms.\n";
         msgBox.setDetailedText(text);
 
         QPushButton *btnRestart = msgBox.addButton(tr("Recommener"), QMessageBox::AcceptRole);
         QPushButton *btnMenu = msgBox.addButton(tr("Revenir au menu"), QMessageBox::RejectRole);
         msgBox.exec();
+
+        this->setFocus();
 
         if (msgBox.clickedButton() == btnRestart)
         {

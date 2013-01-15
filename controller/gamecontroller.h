@@ -76,6 +76,18 @@ public:
      */
     bool pacmanIsCatched();
 
+    /**
+     * @brief getAveragePacmanIATime calcule le temps moyen d'execution de l'algo du pacman.
+     * @return le temps moyen d'execution de l'algo du pacman.
+     */
+    unsigned int getAveragePacmanIATime();
+
+    /**
+     * @brief getAveragePacmanIATime calcule le temps moyen d'execution de l'algo des ghosts.
+     * @return le temps moyen d'execution de l'algo des ghosts.
+     */
+    unsigned int getAverageGhostIATime();
+
 
 protected:
     /**
@@ -106,6 +118,9 @@ private:
 
     bool _pacmanMoved;
     unsigned int _movementCounter;
+    std::vector<unsigned int> _timePacmanIA;
+    std::vector<unsigned int> _timeGhostIA;
+    QTime _time;
 
     HyperCube * _matrix;
     //unsigned int _vertexNumber;

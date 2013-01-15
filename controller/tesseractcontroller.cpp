@@ -21,9 +21,19 @@ void TesseractController::movePacman()
 
 void TesseractController::moveGhost()
 {
+    //*
     _ghosts[0]++;
     if(_ghosts[0] >= this->getVertexNumber())
     {
         _ghosts[0] = 0;
     }
+    //*/
+    /*
+    unsigned int ghostNumber = _ghost.size();
+
+    for (unsigned int i = 0; i < size; ++i)
+    {
+        _matrix->range(_pacman, _ghosts[i]);
+    }
+    //*/
 }
