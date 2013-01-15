@@ -107,6 +107,9 @@ void GameWidget::setController(GameController *gc)
     this->updateGhost();
 
     QObject::connect(_btnNextMove, SIGNAL(clicked()), this, SLOT(nextMove()));
+
+    //_gameController->benchmark(1000);
+    //_gameController->reset();
 }
 
 GameController *GameWidget::getController() const
@@ -172,7 +175,8 @@ void GameWidget::keyPressEvent ( QKeyEvent * event )
 
 void GameWidget::nextMove()
 {
-    bool gameFinished = _gameController->nextMove();
+    _gameController->nextMove();
+    bool gameFinished = _gameController->gameOver();
     this->updateActor();
 
     std::string text("Nombre de coup pour la capture : ");

@@ -2,13 +2,16 @@
 
 GameController::GameController(const std::vector<unsigned int> &sizeByDimension, bool infinite, unsigned int ghost) :
     _pacman(0),
-    _ghosts(),
+    _ghosts(ghost, 0),
     _matrix(0),
+    _pacmanOld(0),
+    _ghostsOld(ghost, 0),
     _pacmanMoved(false),
     _movementCounter(0),
     _timePacmanIA(),
     _timeGhostIA(),
-    _time()
+    _time(),
+    _gameOver(false)
     //_vertexNumber(0)
 {
     // Initialisation du random
@@ -17,12 +20,15 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
 
     _matrix = new HyperCube(sizeByDimension, infinite);
 
+    this->reset();
+    /*
     _pacman = this->generatePosition();
     for(unsigned int i = 0; i < ghost; ++i)
     {
         _ghosts.push_back(this->generatePosition());
+        _ghostsOld.push_back(_ghosts.back());
     }
-
+    //*/
     /*
     for(unsigned int y = 0; y < _matrix->size1(); ++y)
     {
@@ -38,6 +44,28 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
 GameController::~GameController()
 {
     delete _matrix;
+}
+
+
+void GameController::reset()
+{
+
+    _pacman = this->generatePosition();
+    _pacmanOld = _pacman;
+    unsigned int ghost = _ghosts.size();
+    for(unsigned int i = 0; i < ghost; ++i)
+    {
+        _ghosts[i] = this->generatePosition();
+        _ghostsOld[i] =  _ghosts[i];
+    }
+
+    _pacmanMoved = false;
+    _movementCounter = 0;
+
+    _timePacmanIA.clear();
+    _timeGhostIA.clear();
+
+    _gameOver = false;
 }
 
 HyperCube *GameController::getAdjacencyMatrix()
@@ -121,29 +149,37 @@ std::vector<unsigned int> GameController::getGhost() const
 bool GameController::nextMove()
 {
     //Actor a;
-    bool gameOver = false;
+    bool isNothingWrong = false;
 
     if(!_pacmanMoved)
     {
+        //_pacmanOld = _pacman;
+
         _time.restart();
         this->movePacman();
         _timePacmanIA.push_back(_time.elapsed());
+
+        isNothingWrong = this->checkPacmanMoved();
         //a = Actor::PACMAN;
     }
     else
     {
+        //_ghostsOld = _ghosts;
+
         _time.restart();
         this->moveGhost();
         _timeGhostIA.push_back(_time.elapsed());
 
+        isNothingWrong = this->checkGhostMoved();
+
         ++_movementCounter;
-        gameOver = pacmanIsCatched();
+        _gameOver = pacmanIsCatched();
         //a = Actor::GHOST;
     }
 
     _pacmanMoved = !_pacmanMoved;
 
-    return gameOver;
+    return isNothingWrong;
 }
 
 unsigned int GameController::getGhostMovementCounter() const
@@ -205,4 +241,56 @@ unsigned int GameController::getAverageGhostIATime()
     }
 
     return avg;
+}
+
+bool GameController::checkPacmanMoved()
+{
+    bool movement = _pacman != _pacmanOld;
+
+    _pacmanOld = _pacman;
+
+    return movement;
+}
+
+bool GameController::checkGhostMoved()
+{
+    int movement = 0;
+    unsigned int size = _ghosts.size();
+
+    for( unsigned int i = 0; i < size; ++i)
+    {
+        if( _ghosts[i] == _ghostsOld[i] )
+        {
+            ++movement;
+        }
+    }
+
+    _ghostsOld = _ghosts;
+
+    return movement == 1;
+}
+
+void GameController::benchmark(unsigned int n)
+{
+    float avgMove = 0;
+    for( unsigned int i = 0; i < n; ++i)
+    {
+        while( ! this->gameOver() )
+        {
+            this->nextMove();
+        }
+
+        avgMove += this->getGhostMovementCounter();
+
+        this->reset();
+    }
+
+    avgMove /= n;
+
+    std::cout << avgMove << std::endl;
+}
+
+bool GameController::gameOver() const
+{
+    return _gameOver;
 }

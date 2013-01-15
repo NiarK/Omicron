@@ -12,29 +12,26 @@ TesseractController::~TesseractController()
 
 void TesseractController::movePacman()
 {
-    /*
-    _pacman++;
-    if(_pacman >= this->getVertexNumber())
-    {
-        _pacman = 0;
-    }
-    //*/
-
     unsigned int rangePG0 = _matrix->range( _pacman, _ghosts[0] );
     unsigned int rangePG1 = _matrix->range( _pacman, _ghosts[1] );
     std::vector<unsigned int> edges = this->getEdges(_pacman);
     unsigned int edgeNumber = edges.size();
     unsigned int secondPossibility = 0;
 
+    // on cherche a fuir les ghosts
     for(unsigned int i = 0; i < edgeNumber; ++i)
     {
         unsigned int rangeGE = _matrix->range( _ghosts[0], edges[i] ) + _matrix->range( _ghosts[1], edges[i] );
         unsigned int rangePG = rangePG0 + rangePG1;
+
+        // on cherche quel noeuds est le plus loin des ghosts
         if( rangeGE > rangePG )
         {
             _pacman = edges[i];
             return;
         }
+
+        // on cherche quel noeuds ne se rapproche pas d'un noeud
         else if( secondPossibility == 0 && rangeGE == rangePG )
         {
             secondPossibility = edges[i];
@@ -46,14 +43,6 @@ void TesseractController::movePacman()
 
 void TesseractController::moveGhost()
 {
-    /*
-    _ghosts[0]++;
-    if(_ghosts[0] >= this->getVertexNumber())
-    {
-        _ghosts[0] = 0;
-    }
-    //*/
-    //*
     //unsigned int ghostNumber = _ghosts.size();
     unsigned int rangePG0 = _matrix->range( _pacman, _ghosts[0] );
     unsigned int rangePG1 = _matrix->range( _pacman, _ghosts[1] );
@@ -84,6 +73,7 @@ void TesseractController::moveGhost()
             edges = this->getEdges(_ghosts[0]);
             edgeNumber = edges.size();
 
+            // on cherche quel noeuds adjacent est a une distance de 4 de l'autre ghost
             for(unsigned int i = 0; i < edgeNumber; ++i)
             {
                 if( _matrix->range( _ghosts[1], edges[i] ) == 4 )
@@ -98,6 +88,7 @@ void TesseractController::moveGhost()
             edges = this->getEdges(_ghosts[1]);
             edgeNumber = edges.size();
 
+            // on cherche quel noeuds adjacent est a une distance de 4 de l'autre ghost
             for(unsigned int i = 0; i < edgeNumber; ++i)
             {
                 if( _matrix->range( _ghosts[0], edges[i] ) == 4 )
@@ -124,5 +115,4 @@ void TesseractController::moveGhost()
             }
         }
     }
-    //*/
 }

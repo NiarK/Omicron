@@ -62,7 +62,7 @@ void MainWindow::initializeGame()
     switch(_field)
     {
     case Field::BOARD:
-        _game = new BoardWidget(15,13,this);
+        _game = new BoardWidget(8,8,this);
         break;
     case Field::CUBE:
         _game = new CubeWidget(this);

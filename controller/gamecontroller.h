@@ -7,6 +7,7 @@
 // --- Include std --- //
 #include <vector>
 #include <stdexcept>
+#include <cmath>
 
 // --- Include Omicron --- //
 #include "model/hypercube.h"
@@ -88,6 +89,34 @@ public:
      */
     unsigned int getAverageGhostIATime();
 
+    /**
+     * @brief checkPacmanMoved verifie si le pacman a bien bougé pendant ce tour.
+     * @return vrai si le pacman bouge.
+     */
+    bool checkPacmanMoved();
+
+    /**
+     * @brief checkPacmanMoved verifie si un ghost a bien bougé pendant ce tour.
+     * @return vrai si un ghost bouge.
+     */
+    bool checkGhostMoved();
+
+    /**
+     * @brief benchmark lance n fois l'application et fais des stats
+     * @param n est le nombre de fois qu'il faut lancer l'application
+     */
+    void benchmark(unsigned int n);
+
+    /**
+     * @brief gameOver permet de savoir si le jeu est fini.
+     * @return un boolean, vrai si le jeu est fini.
+     */
+    bool gameOver() const;
+
+    /**
+     * @brief reset réinitialise le jeu.
+     */
+    void reset();
 
 protected:
     /**
@@ -118,11 +147,16 @@ private:
      */
     unsigned int generatePosition();
 
+    unsigned int _pacmanOld;
+    std::vector<unsigned int> _ghostsOld;
+
     bool _pacmanMoved;
     unsigned int _movementCounter;
     std::vector<unsigned int> _timePacmanIA;
     std::vector<unsigned int> _timeGhostIA;
     QTime _time;
+
+    bool _gameOver;
 
     //unsigned int _vertexNumber;
 };

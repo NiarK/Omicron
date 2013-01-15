@@ -3,92 +3,139 @@
 
 Menu::Menu(QWidget *parent) :
     QWidget(parent),
-    _btnBoard(0),
-    //_btnDonut(0),
-    _btnCube(0),
-    _btnTesseract(0)
+    _rbBoard(0),
+    _rbCube(0),
+    _rbTesseract(0),
+    _rbDonut(0)
 {
-    _btnBoard     = new QPushButton("->", this);
-    //_btnDonut     = new QPushButton("->", this);
-    _btnCube      = new QPushButton("->", this);
-    _btnTesseract = new QPushButton("->", this);
 
-    //_btnDonut->setEnabled(false);
-    //_btnCube->setEnabled(false);
-    //_btnTesseract->setEnabled(false);
+    // --- --- Layout principale
+    // --- Propriétés de la partie
+    // Terrain
+    _rbBoard = new QRadioButton("Plateau", this);
+    _rbCube = new QRadioButton("Cube", this);
+    _rbTesseract = new QRadioButton("Tesseract", this);
+    _rbDonut = new QRadioButton("Donut", this);
+    _rbBoard->setChecked(true);
+    _rbDonut->setEnabled(false);
 
-    QLabel *lblBoard = new QLabel("Plateau", this);
-    lblBoard->setFont(QFont("Verdana", 30));
+    QVBoxLayout * lytField = new QVBoxLayout();
+    lytField->addWidget(_rbBoard);
+    lytField->addWidget(_rbCube);
+    lytField->addWidget(_rbTesseract);
+    lytField->addWidget(_rbDonut);
 
-    /*
-    QLabel *lblDonut = new QLabel("Donut", this);
-    lblDonut->setFont(QFont("Verdana", 30));
-    //*/
+    QGroupBox * gbField = new QGroupBox("Terrain", this);
+    gbField->setLayout(lytField);
+    // ! Terrain
 
-    QLabel *lblCube = new QLabel("Cube", this);
-    lblCube->setFont(QFont("Verdana", 30));
+    // Type de jeu
+    QRadioButton * rbIA = new QRadioButton("IA", this);
+    QRadioButton * rbPlayerPacman = new QRadioButton("Joueur Pacman", this);
+    QRadioButton * rbPlayerGhost = new QRadioButton("Joueur ghosts", this);
+    rbIA->setChecked(true);
+    rbPlayerPacman->setEnabled(false);
+    rbPlayerGhost->setEnabled(false);
 
-    QLabel *lblTesseract = new QLabel("Tesseract", this);
-    lblTesseract->setFont(QFont("Verdana", 30));
+    QVBoxLayout * lytGameType = new QVBoxLayout();
+    lytGameType->addWidget(rbIA);
+    lytGameType->addWidget(rbPlayerPacman);
+    lytGameType->addWidget(rbPlayerGhost);
 
-    QFrame* line = new QFrame(this);
-    line->setFrameShape(QFrame::VLine);
-    line->setFrameShadow(QFrame::Sunken);
+    QGroupBox * gbGameType = new QGroupBox("Type de jeu", this);
+    gbGameType->setLayout(lytGameType);
+    // ! Type de jeu
 
-    QHBoxLayout * lytBoard = new QHBoxLayout();
-    lytBoard->addWidget(lblBoard);
-    lytBoard->addWidget(line);
-    lytBoard->addWidget(_btnBoard);
+    // Pacman IA
+    QRadioButton * rbRandomAI = new QRadioButton("Aleatoire", this);
+    QRadioButton * rbWiseAI = new QRadioButton("Sense", this);
+    rbWiseAI->setChecked(true);
+    rbRandomAI->setEnabled(false);
 
-    /*
-    QHBoxLayout * lytDonut = new QHBoxLayout();
-    lytDonut->addWidget(lblDonut);
-    lytDonut->addWidget(line);
-    lytDonut->addWidget(_btnDonut);
-    //*/
+    QVBoxLayout * lytPacmanAI = new QVBoxLayout();
+    lytPacmanAI->addWidget(rbRandomAI);
+    lytPacmanAI->addWidget(rbWiseAI);
 
-    QHBoxLayout * lytCube = new QHBoxLayout();
-    lytCube->addWidget(lblCube);
-    lytCube->addWidget(line);
-    lytCube->addWidget(_btnCube);
+    QGroupBox * gbPacmanAI = new QGroupBox("IA du Pacman", this);
+    gbPacmanAI->setLayout(lytPacmanAI);
+    // ! Pacman IA
 
-    QHBoxLayout * lytTesseract = new QHBoxLayout();
-    lytTesseract->addWidget(lblTesseract);
-    lytTesseract->addWidget(line);
-    lytTesseract->addWidget(_btnTesseract);
+    QVBoxLayout * lytGamePropertie = new QVBoxLayout();
+    lytGamePropertie->addWidget(gbField);
+    lytGamePropertie->addWidget(gbGameType);
+    lytGamePropertie->addWidget(gbPacmanAI);
+    // --- --- Propriétés de la partie
+
+    // --- --- Propriétés du terrain
+    QGroupBox * gbFieldPropertie = new QGroupBox("Proprietes", this);
+    // --- --- ! Prorpiétés du terrain
+
+    QHBoxLayout * lytMain = new QHBoxLayout();
+    lytMain->addLayout(lytGamePropertie);
+    lytMain->addWidget(gbFieldPropertie);
+    // --- --- ! Layout principale
+
+    // --- --- Partie normale
+    QPushButton * btnNormalGame = new QPushButton("Partie normale",this);
+
+    QHBoxLayout * lytGbGameLauncher = new QHBoxLayout();
+    lytGbGameLauncher->addWidget(btnNormalGame);
+    lytGbGameLauncher->addSpacing(50);
+
+    QGroupBox * gbGameLauncher = new QGroupBox("Lancement du jeu", this);
+    gbGameLauncher->setLayout(lytGbGameLauncher);
+
+    // Benchmark
+    QLabel * lblBenchmark = new QLabel("Nombre de partie : ");
+    QLineEdit * txtBenchmark = new QLineEdit("10000", this);
+    QPushButton * btnBenchmark = new QPushButton("Benchmark !", this);
+    btnBenchmark->setEnabled(false);
+
+    QHBoxLayout * lytGbBenchmark = new QHBoxLayout();
+    lytGbBenchmark->addWidget(lblBenchmark);
+    lytGbBenchmark->addWidget(txtBenchmark);
+    lytGbBenchmark->addWidget(btnBenchmark);
+    lytGbBenchmark->addSpacing(50);
+
+    QGroupBox * gbBenchmark = new QGroupBox("Benchmark", this);
+    gbBenchmark->setLayout(lytGbBenchmark);
+    // ! Benchmark
+
+    // Lancement du jeu
+    QHBoxLayout * lytGameLauncher = new QHBoxLayout();
+    lytGameLauncher->addWidget(gbGameLauncher);
+    lytGameLauncher->addWidget(gbBenchmark);
+    // ! Lancement du jeu
+
+    // ---!  Partie normale
+
+    // --- ---
+
 
     QVBoxLayout * layout = new QVBoxLayout(this);
-    layout->addLayout(lytBoard);
-    //layout->addLayout(lytDonut);
-    layout->addLayout(lytCube);
-    layout->addLayout(lytTesseract);
-
+    layout->addLayout(lytMain);
+    layout->addLayout(lytGameLauncher);
     this->setLayout(layout);
 
-    QObject::connect(_btnBoard, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
-    QObject::connect(_btnCube, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
-    QObject::connect(_btnTesseract, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
 }
 
 Menu::~Menu()
 {
-    delete _btnBoard;
-    //delete _btnDonut;
-    delete _btnCube;
-    delete _btnTesseract;
+
 }
 
 void Menu::emitFieldChoosed()
 {
-    if(QObject::sender() == _btnBoard)
+    if( _rbBoard->isChecked() )
     {
         emit fieldChoosed(Field::BOARD);
     }
-    else if(QObject::sender() == _btnCube)
+    else if( _rbCube->isChecked() )
     {
         emit fieldChoosed(Field::CUBE);
     }
-    else if(QObject::sender() == _btnTesseract)
+    else if( _rbTesseract->isChecked() )
     {
         emit fieldChoosed(Field::TESSERACT);
     }

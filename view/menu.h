@@ -7,6 +7,9 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QRadioButton>
 
 // --- include Omicron --- //
 #include "view/field.h"
@@ -25,10 +28,11 @@ public slots:
     void emitFieldChoosed();
 
 private:
-    QPushButton* _btnBoard;
-    //QPushButton* _btnDonut;
-    QPushButton* _btnCube;
-    QPushButton* _btnTesseract;
+
+    QRadioButton * _rbBoard;
+    QRadioButton * _rbCube;
+    QRadioButton * _rbTesseract;
+    QRadioButton * _rbDonut;
 
     
 };
