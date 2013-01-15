@@ -13,6 +13,8 @@ public:
 private:
     virtual void movePacman();
     virtual void moveGhost();
+    virtual int range(int pos1,int pos2, int dist,int dimension);
+    virtual int rangeMin(int pacman);
 };
 
 #endif // CUBECONTROLLER_H
