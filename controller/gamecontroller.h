@@ -99,6 +99,8 @@ protected:
     unsigned int _pacman;
     std::vector<unsigned int> _ghosts;
 
+    HyperCube * _matrix;
+
 private:
     /**
      * @brief movePacman fait bouger le pacman. Cette fonction doit implement l'IA du pacman.
@@ -122,7 +124,6 @@ private:
     std::vector<unsigned int> _timeGhostIA;
     QTime _time;
 
-    HyperCube * _matrix;
     //unsigned int _vertexNumber;
 };
 

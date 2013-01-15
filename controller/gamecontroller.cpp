@@ -3,12 +3,12 @@
 GameController::GameController(const std::vector<unsigned int> &sizeByDimension, bool infinite, unsigned int ghost) :
     _pacman(0),
     _ghosts(),
+    _matrix(0),
     _pacmanMoved(false),
     _movementCounter(0),
     _timePacmanIA(),
     _timeGhostIA(),
-    _time(),
-    _matrix(0)
+    _time()
     //_vertexNumber(0)
 {
     // Initialisation du random

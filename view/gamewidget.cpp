@@ -198,8 +198,6 @@ void GameWidget::nextMove()
         QPushButton *btnMenu = msgBox.addButton(tr("Revenir au menu"), QMessageBox::RejectRole);
         msgBox.exec();
 
-        this->setFocus();
-
         if (msgBox.clickedButton() == btnRestart)
         {
             emit restartClicked();
