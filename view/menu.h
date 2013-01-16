@@ -13,6 +13,7 @@
 
 // --- include Omicron --- //
 #include "view/field.h"
+#include "view/propertywidget.h"
 
 class Menu : public QWidget
 {
@@ -22,10 +23,12 @@ public:
     virtual  ~Menu();
     
 signals:
-    void fieldChoosed(Field m);
+    void fieldChoosed(Field f);
+    void benchmarkLaunched(Field f);
     
 public slots:
     void emitFieldChoosed();
+    void emitBenchmarkLaunched();
 
 private:
 

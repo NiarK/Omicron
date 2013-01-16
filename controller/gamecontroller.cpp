@@ -273,6 +273,9 @@ bool GameController::checkGhostMoved()
 void GameController::benchmark(unsigned int n)
 {
     float avgMove = 0;
+    unsigned int maxMove = 0;
+    unsigned int minMove = 0;
+    unsigned int currentMove = 0;
     for( unsigned int i = 0; i < n; ++i)
     {
         while( ! this->gameOver() )
@@ -280,14 +283,27 @@ void GameController::benchmark(unsigned int n)
             this->nextMove();
         }
 
-        avgMove += this->getGhostMovementCounter();
+        currentMove = this->getGhostMovementCounter();
+
+        if( currentMove > maxMove )
+        {
+            maxMove = currentMove;
+        }
+        else if( currentMove < minMove || minMove == 0 )
+        {
+            minMove = currentMove;
+        }
+
+        avgMove += currentMove;
 
         this->reset();
     }
 
     avgMove /= n;
 
-    std::cout << avgMove << std::endl;
+    std::cout << "Moyenne : " << avgMove << std::endl;
+    std::cout << "Minimum : " << minMove << std::endl;
+    std::cout << "Maximum : " << maxMove << std::endl << std::endl;
 }
 
 bool GameController::gameOver() const

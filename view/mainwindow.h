@@ -20,6 +20,11 @@
 #include "view/cubewidget.h"
 #include "view/tesseractwidget.h"
 
+// --- Temporaire --- //
+#include "controller/boardcontroller.h"
+#include "controller/cubecontroller.h"
+#include "controller/tesseractcontroller.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,6 +39,7 @@ public slots:
     void initializeMenu();
     void initializeGame(Field field);
     void initializeGame();
+    void lanchBenchmark(Field f);
 
 protected:
 

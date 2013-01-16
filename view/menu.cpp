@@ -60,19 +60,43 @@ Menu::Menu(QWidget *parent) :
     gbPacmanAI->setLayout(lytPacmanAI);
     // ! Pacman IA
 
-    QVBoxLayout * lytGamePropertie = new QVBoxLayout();
-    lytGamePropertie->addWidget(gbField);
-    lytGamePropertie->addWidget(gbGameType);
-    lytGamePropertie->addWidget(gbPacmanAI);
+    QVBoxLayout * lytGameProperty = new QVBoxLayout();
+    lytGameProperty->addWidget(gbField);
+    lytGameProperty->addWidget(gbGameType);
+    lytGameProperty->addWidget(gbPacmanAI);
     // --- --- Propriétés de la partie
 
     // --- --- Propriétés du terrain
-    QGroupBox * gbFieldPropertie = new QGroupBox("Proprietes", this);
+    QLabel * imgPacman = new QLabel();
+    imgPacman->setPixmap(QPixmap(":/Pictures/pacman.png"));
+
+    QLabel * lblPacman = new QLabel("Pacman");
+
+    QLabel * imgGhost = new QLabel();
+    imgGhost->setPixmap(QPixmap(":/Pictures/ghost.png"));
+
+    QLabel * lblGhost = new QLabel("Ghost");
+
+    QHBoxLayout * lytLegend = new QHBoxLayout();
+    lytLegend->addWidget(imgPacman);
+    lytLegend->addWidget(lblPacman);
+    lytLegend->addSpacing(200);
+    lytLegend->addWidget(lblGhost);
+    lytLegend->addWidget(imgGhost);
+
+    PropertyWidget * property = new PropertyWidget(this);
+
+    QVBoxLayout * lytProperty = new QVBoxLayout();
+    lytProperty->addLayout(lytLegend);
+    lytProperty->addWidget(property);
+
+    QGroupBox * gbFieldProperty = new QGroupBox("Proprietes", this);
+    gbFieldProperty->setLayout(lytProperty);
     // --- --- ! Prorpiétés du terrain
 
     QHBoxLayout * lytMain = new QHBoxLayout();
-    lytMain->addLayout(lytGamePropertie);
-    lytMain->addWidget(gbFieldPropertie);
+    lytMain->addLayout(lytGameProperty);
+    lytMain->addWidget(gbFieldProperty);
     // --- --- ! Layout principale
 
     // --- --- Partie normale
@@ -89,7 +113,7 @@ Menu::Menu(QWidget *parent) :
     QLabel * lblBenchmark = new QLabel("Nombre de partie : ");
     QLineEdit * txtBenchmark = new QLineEdit("10000", this);
     QPushButton * btnBenchmark = new QPushButton("Benchmark !", this);
-    btnBenchmark->setEnabled(false);
+    //btnBenchmark->setEnabled(false);
 
     QHBoxLayout * lytGbBenchmark = new QHBoxLayout();
     lytGbBenchmark->addWidget(lblBenchmark);
@@ -118,6 +142,7 @@ Menu::Menu(QWidget *parent) :
     this->setLayout(layout);
 
     QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    QObject::connect(btnBenchmark, SIGNAL(clicked()), this, SLOT(emitBenchmarkLaunched()));
 }
 
 Menu::~Menu()
@@ -138,5 +163,21 @@ void Menu::emitFieldChoosed()
     else if( _rbTesseract->isChecked() )
     {
         emit fieldChoosed(Field::TESSERACT);
+    }
+}
+
+void Menu::emitBenchmarkLaunched()
+{
+    if( _rbBoard->isChecked() )
+    {
+        emit benchmarkLaunched(Field::BOARD);
+    }
+    else if( _rbCube->isChecked() )
+    {
+        emit benchmarkLaunched(Field::CUBE);
+    }
+    else if( _rbTesseract->isChecked() )
+    {
+        emit benchmarkLaunched(Field::TESSERACT);
     }
 }

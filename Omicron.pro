@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     controller/cubecontroller.cpp \
     view/gamewidget.cpp \
     controller/tesseractcontroller.cpp \
-    view/tesseractwidget.cpp
+    view/tesseractwidget.cpp \
+    view/propertywidget.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -38,4 +39,10 @@ HEADERS  += \
     view/field.h \
     view/gamewidget.h \
     controller/tesseractcontroller.h \
-    view/tesseractwidget.h
+    view/tesseractwidget.h \
+    view/propertywidget.h
+
+OTHER_FILES +=
+
+RESOURCES += \
+    Pictures.qrc
