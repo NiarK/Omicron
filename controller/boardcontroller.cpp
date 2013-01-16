@@ -30,7 +30,7 @@ unsigned int BoardController::getHeight()
 
 //fonction qui test si la position est au bord de la map
 //renvoi true si c'est un bord
-bool BoardController::boardTest(int pos){
+bool BoardController::borderTest(int pos){
     int w = getWidth();
     int h = getHeight();
     return (pos < w || pos >= w * h - w || pos % w ==0 || pos % w == w - 1);
@@ -67,13 +67,13 @@ bool BoardController::parityTest(int nb){
     else return false;
 }
 
-void BoardController::calculateMovement(int nb){
+void BoardController::calculateMovement(unsigned int nb){
     //Définition des variables
     int vertical;
     int verticalabs;
     int horizontal;
     int horizontalabs;
-    int nb2;
+    unsigned int nb2;
     int w = getWidth();
     if( nb==1 )
         nb2=0;
@@ -81,13 +81,13 @@ void BoardController::calculateMovement(int nb){
         nb2=1;
     //calcul du vertical
     vertical = _ghosts[nb] / w - _pacman / w;
-    if( vertical < 0 )// on passe l'horizontal en absolu pour le comparer
+    if( vertical < 0 )// on passe le vertical en absolu pour le comparer
         verticalabs = -vertical;
     else
         verticalabs = vertical;
     //calcul de l'horizontal
     horizontal = _ghosts[nb] % w - _pacman % w;
-    if(horizontal < 0)// on passe le vertical en absolu pour le comparer
+    if(horizontal < 0)// on passe l'horizontal en absolu pour le comparer
         horizontalabs = -horizontal;
     else
         horizontalabs = horizontal;
@@ -196,31 +196,31 @@ void BoardController::movePacman()
     //On évite d'aller sur les bords.
     //On va vers la valeur la plus élevée
     if( left > 1
-            && ( left >= down || ( down != 0 && boardTest(_pacman + w)))
-            && ( left >= right || ( right!= 0 && boardTest(_pacman + 1)))
-            && ( left >= up || ( up != 0 && boardTest(_pacman - w)))
-            && !boardTest(_pacman - 1)){
+            && ( left >= down || ( down != 0 && borderTest(_pacman + w)))
+            && ( left >= right || ( right!= 0 && borderTest(_pacman + 1)))
+            && ( left >= up || ( up != 0 && borderTest(_pacman - w)))
+            && !borderTest(_pacman - 1)){
         _pacman -= 1;
     }
     else if( down > 1
-            && ( down >= left || ( left != 0 && boardTest(_pacman - 1)))
-            && ( down >= right || ( right != 0 && boardTest(_pacman + 1)))
-            && ( down >= up || ( up != 0 && boardTest(_pacman - w)))
-            && !boardTest(_pacman + w)){
+            && ( down >= left || ( left != 0 && borderTest(_pacman - 1)))
+            && ( down >= right || ( right != 0 && borderTest(_pacman + 1)))
+            && ( down >= up || ( up != 0 && borderTest(_pacman - w)))
+            && !borderTest(_pacman + w)){
         _pacman += w;
     }
     else if( right > 1
-            && ( right >= left || ( left != 0 && boardTest(_pacman - 1)))
-            && ( right >= down || ( down !=0 && boardTest(_pacman + w)))
-            && ( right >= up || ( up !=0 && boardTest(_pacman - w)))
-            && !boardTest(_pacman + 1 )){
+            && ( right >= left || ( left != 0 && borderTest(_pacman - 1)))
+            && ( right >= down || ( down !=0 && borderTest(_pacman + w)))
+            && ( right >= up || ( up !=0 && borderTest(_pacman - w)))
+            && !borderTest(_pacman + 1 )){
         _pacman += 1;
     }
     else if( up > 1
-            && ( up >= left || ( left != 0 && boardTest(_pacman - 1)))
-            && ( up >= down || ( down != 0 && boardTest(_pacman + w)))
-            && ( up >= right || ( right != 0 && boardTest(_pacman + 1)))
-            && !boardTest(_pacman - w)){
+            && ( up >= left || ( left != 0 && borderTest(_pacman - 1)))
+            && ( up >= down || ( down != 0 && borderTest(_pacman + w)))
+            && ( up >= right || ( right != 0 && borderTest(_pacman + 1)))
+            && !borderTest(_pacman - w)){
         _pacman -= w;
     }
     //Les valeurs qui ne sont pas sur les bords font que le pacman est mangé
