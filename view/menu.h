@@ -12,7 +12,8 @@
 #include <QRadioButton>
 
 // --- include Omicron --- //
-#include "view/field.h"
+//#include "view/field.h"
+#include "view/gameoption.h"
 #include "view/boardpropertywidget.h"
 #include "view/cubepropertywidget.h"
 #include "view/tesseractpropertywidget.h"

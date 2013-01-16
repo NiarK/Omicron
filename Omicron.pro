@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     view/boardpropertywidget.cpp \
     view/tesseractpropertywidget.cpp \
     view/cubepropertywidget.cpp \
-    view/gameoption.cpp
+    view/gameoption.cpp \
+    view/boardoption.cpp \
+    view/tesseractoption.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -48,7 +50,9 @@ HEADERS  += \
     view/boardpropertywidget.h \
     view/tesseractpropertywidget.h \
     view/cubepropertywidget.h \
-    view/gameoption.h
+    view/gameoption.h \
+    view/boardoption.h \
+    view/tesseractoption.h
 
 OTHER_FILES +=
 
