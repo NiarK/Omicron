@@ -121,29 +121,23 @@ void CubeController::moveGhost()
         _ghosts[1] = _pacman;
     else
     {
-        std::cout << "premier :"<< _ghosts[0] << " et l'autre : "<< _ghosts[1]<<std::endl;
         int rangeNow = range(_ghosts[0],_ghosts[1],0,3);
-        std::cout<< "distance actuelle : "<< rangeNow << std::endl;
         if(_ghosts[0] % 4 == 0 || _ghosts[0] % 4 == 3)
         {
             if(range(1 + ( (_ghosts[0] / 4 ) * 4), _ghosts[1], 0, 3 ) > rangeNow)
             {
-                std::cout << "1va en "<< 1 + ( (_ghosts[0] / 4 ) * 4) << std::endl;
                 _ghosts[0] = 1 + ( (_ghosts[0] / 4 ) * 4) ;
             }
             else if(range(2 + ( (_ghosts[0] / 4 ) * 4), _ghosts[1], 0, 3 ) > rangeNow)
             {
-                std::cout << "2va en "<< 2 + ( (_ghosts[0] / 4 ) * 4) << std::endl;
                 _ghosts[0] = 2 + ( (_ghosts[0] / 4 ) * 4) ;
             }
             else if(_ghosts[0] < 4)
             {
-                std::cout << "5va en "<< _ghosts[0]+4 << std::endl;
                 _ghosts[0] += 4;
             }
             else
             {
-                std::cout << "6va en "<< _ghosts[0]-4 << std::endl;
                 _ghosts[1] -= 4;
             }
         }
@@ -151,22 +145,18 @@ void CubeController::moveGhost()
         {
             if(range(0 + ( (_ghosts[0] / 4 ) * 4), _ghosts[1], 0, 3 ) > rangeNow)
             {
-                std::cout << "3va en "<< 0 + ( (_ghosts[0] / 4 ) * 4) << std::endl;
                 _ghosts[0] = 0 + ( (_ghosts[0] / 4 ) * 4) ;
             }
             else if(range(3 + ( (_ghosts[0] / 4 ) * 4), _ghosts[1], 0, 3 ) > rangeNow)
             {
-                std::cout << "4va en "<< 3 + ( (_ghosts[0] / 4 ) * 4) << std::endl;
                 _ghosts[0] = 3 + ( (_ghosts[0] / 4 ) * 4) ;
             }
             else if(_ghosts[0] < 4)
             {
-                std::cout << "5va en "<< _ghosts[0]+4 << std::endl;
                 _ghosts[0] += 4;
             }
             else
             {
-                std::cout << "6va en "<< _ghosts[0]-4 << std::endl;
                 _ghosts[1] -= 4;
             }
         }
