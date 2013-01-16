@@ -6,7 +6,9 @@ Menu::Menu(QWidget *parent) :
     _rbBoard(0),
     _rbCube(0),
     _rbTesseract(0),
-    _rbDonut(0)
+    _rbDonut(0),
+    _property(0),
+    _lytProperty(0)
 {
 
     // --- --- Layout principale
@@ -24,6 +26,7 @@ Menu::Menu(QWidget *parent) :
     lytField->addWidget(_rbCube);
     lytField->addWidget(_rbTesseract);
     lytField->addWidget(_rbDonut);
+    lytField->addStretch();
 
     QGroupBox * gbField = new QGroupBox("Terrain", this);
     gbField->setLayout(lytField);
@@ -41,6 +44,7 @@ Menu::Menu(QWidget *parent) :
     lytGameType->addWidget(rbIA);
     lytGameType->addWidget(rbPlayerPacman);
     lytGameType->addWidget(rbPlayerGhost);
+    lytGameType->addStretch();
 
     QGroupBox * gbGameType = new QGroupBox("Type de jeu", this);
     gbGameType->setLayout(lytGameType);
@@ -55,6 +59,7 @@ Menu::Menu(QWidget *parent) :
     QVBoxLayout * lytPacmanAI = new QVBoxLayout();
     lytPacmanAI->addWidget(rbRandomAI);
     lytPacmanAI->addWidget(rbWiseAI);
+    lytPacmanAI->addStretch();
 
     QGroupBox * gbPacmanAI = new QGroupBox("IA du Pacman", this);
     gbPacmanAI->setLayout(lytPacmanAI);
@@ -78,20 +83,23 @@ Menu::Menu(QWidget *parent) :
     QLabel * lblGhost = new QLabel("Ghost");
 
     QHBoxLayout * lytLegend = new QHBoxLayout();
+    lytLegend->addStretch();
     lytLegend->addWidget(imgPacman);
     lytLegend->addWidget(lblPacman);
-    lytLegend->addSpacing(200);
-    lytLegend->addWidget(lblGhost);
+    lytLegend->addStretch();
+    //lytLegend->addSpacing(200);
     lytLegend->addWidget(imgGhost);
+    lytLegend->addWidget(lblGhost);
+    lytLegend->addStretch();
 
-    PropertyWidget * property = new PropertyWidget(this);
+    //_property = new BoardPropertyWidget(this);
 
-    QVBoxLayout * lytProperty = new QVBoxLayout();
-    lytProperty->addLayout(lytLegend);
-    lytProperty->addWidget(property);
+    _lytProperty = new QVBoxLayout();
+    _lytProperty->addLayout(lytLegend);
+    this->setPropertyWidget();
 
     QGroupBox * gbFieldProperty = new QGroupBox("Proprietes", this);
-    gbFieldProperty->setLayout(lytProperty);
+    gbFieldProperty->setLayout(_lytProperty);
     // --- --- ! Prorpiétés du terrain
 
     QHBoxLayout * lytMain = new QHBoxLayout();
@@ -104,7 +112,7 @@ Menu::Menu(QWidget *parent) :
 
     QHBoxLayout * lytGbGameLauncher = new QHBoxLayout();
     lytGbGameLauncher->addWidget(btnNormalGame);
-    lytGbGameLauncher->addSpacing(50);
+    lytGbGameLauncher->addStretch();
 
     QGroupBox * gbGameLauncher = new QGroupBox("Lancement du jeu", this);
     gbGameLauncher->setLayout(lytGbGameLauncher);
@@ -119,7 +127,7 @@ Menu::Menu(QWidget *parent) :
     lytGbBenchmark->addWidget(lblBenchmark);
     lytGbBenchmark->addWidget(txtBenchmark);
     lytGbBenchmark->addWidget(btnBenchmark);
-    lytGbBenchmark->addSpacing(50);
+    lytGbBenchmark->addStretch();
 
     QGroupBox * gbBenchmark = new QGroupBox("Benchmark", this);
     gbBenchmark->setLayout(lytGbBenchmark);
@@ -143,6 +151,10 @@ Menu::Menu(QWidget *parent) :
 
     QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
     QObject::connect(btnBenchmark, SIGNAL(clicked()), this, SLOT(emitBenchmarkLaunched()));
+
+    QObject::connect(_rbBoard, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
+    QObject::connect(_rbCube, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
+    QObject::connect(_rbTesseract, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
 }
 
 Menu::~Menu()
@@ -180,4 +192,27 @@ void Menu::emitBenchmarkLaunched()
     {
         emit benchmarkLaunched(Field::TESSERACT);
     }
+}
+
+void Menu::setPropertyWidget()
+{
+    if( _property )
+    {
+        delete _property;
+    }
+
+    if( _rbBoard->isChecked() )
+    {
+        _property = new BoardPropertyWidget(this);
+    }
+    else if( _rbCube->isChecked() )
+    {
+        _property = new CubePropertyWidget(this);
+    }
+    else if( _rbTesseract->isChecked() )
+    {
+        _property = new TesseractPropertyWidget(this);
+    }
+
+    _lytProperty->addWidget(_property);
 }

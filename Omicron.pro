@@ -25,7 +25,11 @@ SOURCES += main.cpp\
     view/gamewidget.cpp \
     controller/tesseractcontroller.cpp \
     view/tesseractwidget.cpp \
-    view/propertywidget.cpp
+    view/propertywidget.cpp \
+    view/boardpropertywidget.cpp \
+    view/tesseractpropertywidget.cpp \
+    view/cubepropertywidget.cpp \
+    view/gameoption.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -40,7 +44,11 @@ HEADERS  += \
     view/gamewidget.h \
     controller/tesseractcontroller.h \
     view/tesseractwidget.h \
-    view/propertywidget.h
+    view/propertywidget.h \
+    view/boardpropertywidget.h \
+    view/tesseractpropertywidget.h \
+    view/cubepropertywidget.h \
+    view/gameoption.h
 
 OTHER_FILES +=
 

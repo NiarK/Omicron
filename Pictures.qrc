@@ -3,5 +3,7 @@
         <file>Pictures/board.png</file>
         <file>Pictures/ghost.png</file>
         <file>Pictures/pacman.png</file>
+        <file>Pictures/cube.png</file>
+        <file>Pictures/tesseract.png</file>
     </qresource>
 </RCC>

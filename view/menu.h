@@ -13,7 +13,9 @@
 
 // --- include Omicron --- //
 #include "view/field.h"
-#include "view/propertywidget.h"
+#include "view/boardpropertywidget.h"
+#include "view/cubepropertywidget.h"
+#include "view/tesseractpropertywidget.h"
 
 class Menu : public QWidget
 {
@@ -29,6 +31,7 @@ signals:
 public slots:
     void emitFieldChoosed();
     void emitBenchmarkLaunched();
+    void setPropertyWidget();
 
 private:
 
@@ -37,6 +40,8 @@ private:
     QRadioButton * _rbTesseract;
     QRadioButton * _rbDonut;
 
+    PropertyWidget * _property;
+    QBoxLayout * _lytProperty;
     
 };
 

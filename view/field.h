@@ -1,6 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+
 enum class Field
 {
     BOARD,

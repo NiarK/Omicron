@@ -15,7 +15,9 @@ class PropertyWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PropertyWidget(QWidget *parent = 0);
+    explicit PropertyWidget(QString picture, QWidget *parent = 0);
+
+
     
 signals:
     

@@ -116,7 +116,7 @@ public:
     /**
      * @brief reset réinitialise le jeu.
      */
-    void reset();
+    virtual void reset();
 
 protected:
     /**
