@@ -60,6 +60,7 @@ private:
 
     unsigned int _width;
     unsigned int _height;
+    unsigned int _runner;
 };
 
 #endif // BOARD_H
