@@ -17,7 +17,8 @@ class PropertyWidget : public QWidget
 public:
     explicit PropertyWidget(QString picture, QWidget *parent = 0);
 
-
+    virtual void updateIHM() = 0;
+    virtual void updateOption() = 0;
     
 signals:
     

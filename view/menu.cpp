@@ -1,12 +1,18 @@
 #include "menu.h"
 
 
-Menu::Menu(QWidget *parent) :
+Menu::Menu(GameOption & option, QWidget *parent) :
     QWidget(parent),
+    _option(option),
     _rbBoard(0),
     _rbCube(0),
     _rbTesseract(0),
     _rbDonut(0),
+    _rbAI(0),
+    _rbPlayerPacman(0),
+    _rbPlayerGhost(0),
+    _rbRandomAI(0),
+    _rbWiseAI(0),
     _property(0),
     _lytProperty(0)
 {
@@ -33,17 +39,17 @@ Menu::Menu(QWidget *parent) :
     // ! Terrain
 
     // Type de jeu
-    QRadioButton * rbIA = new QRadioButton("IA", this);
-    QRadioButton * rbPlayerPacman = new QRadioButton("Joueur Pacman", this);
-    QRadioButton * rbPlayerGhost = new QRadioButton("Joueur ghosts", this);
-    rbIA->setChecked(true);
-    rbPlayerPacman->setEnabled(false);
-    rbPlayerGhost->setEnabled(false);
+    _rbAI = new QRadioButton("IA", this);
+    _rbPlayerPacman = new QRadioButton("Joueur Pacman", this);
+    _rbPlayerGhost = new QRadioButton("Joueur ghosts", this);
+    //_rbAI->setChecked(true);
+    _rbPlayerPacman->setEnabled(false);
+    _rbPlayerGhost->setEnabled(false);
 
     QVBoxLayout * lytGameType = new QVBoxLayout();
-    lytGameType->addWidget(rbIA);
-    lytGameType->addWidget(rbPlayerPacman);
-    lytGameType->addWidget(rbPlayerGhost);
+    lytGameType->addWidget(_rbAI);
+    lytGameType->addWidget(_rbPlayerPacman);
+    lytGameType->addWidget(_rbPlayerGhost);
     lytGameType->addStretch();
 
     QGroupBox * gbGameType = new QGroupBox("Type de jeu", this);
@@ -51,14 +57,14 @@ Menu::Menu(QWidget *parent) :
     // ! Type de jeu
 
     // Pacman IA
-    QRadioButton * rbRandomAI = new QRadioButton("Aleatoire", this);
-    QRadioButton * rbWiseAI = new QRadioButton("Sense", this);
-    rbWiseAI->setChecked(true);
-    rbRandomAI->setEnabled(false);
+    _rbRandomAI = new QRadioButton("Aleatoire", this);
+    _rbWiseAI = new QRadioButton("Sense", this);
+    //_rbWiseAI->setChecked(true);
+    _rbRandomAI->setEnabled(false);
 
     QVBoxLayout * lytPacmanAI = new QVBoxLayout();
-    lytPacmanAI->addWidget(rbRandomAI);
-    lytPacmanAI->addWidget(rbWiseAI);
+    lytPacmanAI->addWidget(_rbRandomAI);
+    lytPacmanAI->addWidget(_rbWiseAI);
     lytPacmanAI->addStretch();
 
     QGroupBox * gbPacmanAI = new QGroupBox("IA du Pacman", this);
@@ -96,7 +102,6 @@ Menu::Menu(QWidget *parent) :
 
     _lytProperty = new QVBoxLayout();
     _lytProperty->addLayout(lytLegend);
-    this->setPropertyWidget();
 
     QGroupBox * gbFieldProperty = new QGroupBox("Proprietes", this);
     gbFieldProperty->setLayout(_lytProperty);
@@ -149,12 +154,16 @@ Menu::Menu(QWidget *parent) :
     layout->addLayout(lytGameLauncher);
     this->setLayout(layout);
 
-    QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    this->setPropertyWidget();
+    this->updateIHM();
+
+    //QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
+    QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitGameLaunched()));
     QObject::connect(btnBenchmark, SIGNAL(clicked()), this, SLOT(emitBenchmarkLaunched()));
 
-    QObject::connect(_rbBoard, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
-    QObject::connect(_rbCube, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
-    QObject::connect(_rbTesseract, SIGNAL(clicked()), this, SLOT(setPropertyWidget()));
+    QObject::connect(_rbBoard, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbCube, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbTesseract, SIGNAL(clicked()), this, SLOT(updateOption()));
 }
 
 Menu::~Menu()
@@ -194,6 +203,62 @@ void Menu::emitBenchmarkLaunched()
     }
 }
 
+void Menu::emitGameLaunched()
+{
+    //GameOption & option = GameOption();
+
+    /*GameType gt;
+    PacmanAI ai;
+
+    if( _rbAI->isChecked() )
+    {
+        gt = GameType::AI;
+    }
+    else if( _rbPlayerGhost->isChecked() )
+    {
+        gt = GameType::GHOST_PLAYER;
+    }
+    else if( _rbPlayerPacman->isChecked() )
+    {
+        gt = GameType::PACMAN_PLAYER;
+    }
+
+    if( _rbRandomAI->isChecked() )
+    {
+        ai = PacmanAI::RANDOM;
+    }
+    else if( _rbWiseAI->isChecked() )
+    {
+        ai = PacmanAI::WISE;
+    }
+
+
+    if( _rbBoard->isChecked() )
+    {
+        BoardOption option(gt, ai, 8, 8);
+        emit gameLaunched(option);
+    }
+    else if( _rbCube->isChecked() )
+    {
+        GameOption option(Field::CUBE, gt, ai);
+        emit gameLaunched(option);
+    }
+    else if( _rbTesseract->isChecked() )
+    {
+        TesseractOption option(gt, ai, TesseractDisplay::IN_3D);
+        emit gameLaunched(option);
+    }
+    else if( _rbDonut->isChecked() )
+    {
+        // do nothing
+    }*/
+
+    emit gameLaunched();
+
+    //delete option; // pas sur de ce que je fais
+
+}
+
 void Menu::setPropertyWidget()
 {
     if( _property )
@@ -203,16 +268,107 @@ void Menu::setPropertyWidget()
 
     if( _rbBoard->isChecked() )
     {
-        _property = new BoardPropertyWidget(this);
+        _property = new BoardPropertyWidget(_option, this);
     }
     else if( _rbCube->isChecked() )
     {
-        _property = new CubePropertyWidget(this);
+        _property = new CubePropertyWidget(_option, this);
     }
     else if( _rbTesseract->isChecked() )
     {
-        _property = new TesseractPropertyWidget(this);
+        _property = new TesseractPropertyWidget(_option, this);
     }
 
     _lytProperty->addWidget(_property);
+}
+
+void Menu::updateOption()
+{
+    if( _rbAI->isChecked() )
+    {
+        _option.setGameType(GameType::AI);
+    }
+    else if( _rbPlayerGhost->isChecked() )
+    {
+        _option.setGameType(GameType::GHOST_PLAYER);
+    }
+    else if( _rbPlayerPacman->isChecked() )
+    {
+        _option.setGameType(GameType::PACMAN_PLAYER);
+    }
+
+    if( _rbRandomAI->isChecked() )
+    {
+        _option.setPacmanAI(PacmanAI::RANDOM);
+    }
+    else if( _rbWiseAI->isChecked() )
+    {
+        _option.setPacmanAI(PacmanAI::WISE);
+    }
+
+
+    if( _rbBoard->isChecked() )
+    {
+        _option.setField(Field::BOARD);
+    }
+    else if( _rbCube->isChecked() )
+    {
+        _option.setField(Field::CUBE);
+    }
+    else if( _rbTesseract->isChecked() )
+    {
+        _option.setField(Field::TESSERACT);
+    }
+    else if( _rbDonut->isChecked() )
+    {
+        _option.setField(Field::DONUT);
+    }
+
+    this->setPropertyWidget();
+}
+
+void Menu::updateIHM()
+{
+    switch(_option.getField())
+    {
+    case Field::BOARD:
+        _rbBoard->setChecked(true);
+        break;
+    case Field::CUBE:
+        _rbCube->setChecked(true);
+        break;
+    case Field::TESSERACT:
+        _rbTesseract->setChecked(true);
+        break;
+    case Field::DONUT:
+        _rbDonut->setChecked(true);
+        break;
+    }
+
+    this->setPropertyWidget();
+
+    switch(_option.getGameType())
+    {
+    case GameType::AI:
+        _rbAI->setChecked(true);
+        break;
+    case GameType::PACMAN_PLAYER:
+        _rbPlayerPacman->setChecked(true);
+        break;
+    case GameType::GHOST_PLAYER:
+        _rbPlayerGhost->setChecked(true);
+        break;
+    }
+
+    switch(_option.getPacmanAI())
+    {
+    case PacmanAI::RANDOM:
+        _rbRandomAI->setChecked(true);
+        break;
+    case PacmanAI::WISE:
+        _rbWiseAI->setChecked(true);
+        break;
+    }
+
+    _property->updateIHM();
 }

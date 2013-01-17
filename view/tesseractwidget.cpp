@@ -1,7 +1,8 @@
 #include "tesseractwidget.h"
 
-TesseractWidget::TesseractWidget(QWidget *parent) :
-    GameWidget(parent)
+TesseractWidget::TesseractWidget(const GameOption &option, QWidget *parent) :
+    GameWidget(option, parent),
+    _display(option.getDisplay())
 {
     this->setController(new TesseractController());
 }
@@ -9,8 +10,8 @@ TesseractWidget::TesseractWidget(QWidget *parent) :
 void TesseractWidget::positionVertex(std::vector<QGraphicsEllipseItem*>::iterator vertexIt,
                                 std::vector<QGraphicsEllipseItem*>::iterator endVertexIt) const
 {
-    QTime t = QTime::currentTime();
-    if(t.second() % 2 == 0)
+    //QTime t = QTime::currentTime();
+    if(_display == TesseractDisplay::IN_2D)
     {
         unsigned int spacing = GameWidget::SPACING * 7;
         unsigned int offset = GameWidget::SPACING * 4.8;
@@ -39,7 +40,7 @@ void TesseractWidget::positionVertex(std::vector<QGraphicsEllipseItem*>::iterato
                                  i / 2 * spacing + offset * 2);
         }
     }
-    else
+    else if( _display == TesseractDisplay::IN_3D )
     {
         //*
         float spacingRatio = 1.3;

@@ -20,6 +20,7 @@
 #include <vector>
 
 // --- Include Omicron --- //
+#include "view/gameoption.h"
 #include "controller/gamecontroller.h"
 #include "view/field.h"
 
@@ -27,7 +28,7 @@ class GameWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GameWidget(QWidget *parent = 0);
+    explicit GameWidget(const GameOption &option, QWidget *parent = 0);
     virtual ~GameWidget();
 
 

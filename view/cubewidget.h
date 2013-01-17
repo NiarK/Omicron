@@ -4,6 +4,7 @@
 // --- Include Omicron --- //
 #include "view/gamewidget.h"
 #include "controller/cubecontroller.h"
+#include "view/gameoption.h"
 
 class CubeWidget : public GameWidget
 {
@@ -11,7 +12,7 @@ class CubeWidget : public GameWidget
 public:
     const unsigned int SPACING = 30;
 
-    explicit CubeWidget(QWidget *parent = 0);
+    explicit CubeWidget(const GameOption & option, QWidget *parent = 0);
 
     virtual void positionVertex(std::vector<QGraphicsEllipseItem*>::iterator vertexIt,
                                 std::vector<QGraphicsEllipseItem*>::iterator endVertexIt) const;

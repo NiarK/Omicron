@@ -1,11 +1,11 @@
 #include "boardwidget.h"
 
-BoardWidget::BoardWidget(unsigned int width, unsigned int height, QWidget *parent) :
-    GameWidget(parent),
-    _width(width),
-    _height(height)
+BoardWidget::BoardWidget(const GameOption & option, QWidget *parent) :
+    GameWidget(option, parent),
+    _width(option.getWidth()),
+    _height(option.getHeight())
 {
-    this->setController(new BoardController(width, height));
+    this->setController(new BoardController(_width, _height));
 
     /*std::vector<QGraphicsEllipseItem*>::iterator it = this->getVertexIterator();
     std::vector<QGraphicsEllipseItem*>::iterator end = this->getVertexEndIterator();

@@ -6,12 +6,16 @@
 
 // --- Omicron --- //
 #include "view/propertywidget.h"
+#include "view/gameoption.h"
 
 class CubePropertyWidget : public PropertyWidget
 {
     Q_OBJECT
 public:
-    explicit CubePropertyWidget(QWidget *parent = 0);
+    explicit CubePropertyWidget(GameOption & option, QWidget *parent = 0);
+
+    virtual void updateIHM();
+    virtual void updateOption();
     
 signals:
     

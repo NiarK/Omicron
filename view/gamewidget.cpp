@@ -1,7 +1,7 @@
 
 #include "gamewidget.h"
 
-GameWidget::GameWidget(QWidget *parent) :
+GameWidget::GameWidget(const GameOption &option, QWidget *parent) :
     QWidget(parent),
     _btnReturn(0),
     _btnNextMove(0),

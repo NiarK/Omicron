@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
+      _option(),
       _menu(0),
       _game(0)
 {
@@ -24,7 +25,7 @@ void MainWindow::initializeMenu()
 
     if(!_menu)
     {
-        _menu = new Menu(this);
+        _menu = new Menu(_option, this);
     }
 
     if(_game)
@@ -35,17 +36,65 @@ void MainWindow::initializeMenu()
 
     this->setCentralWidget(_menu);
 
-    QObject::connect(_menu, SIGNAL(fieldChoosed(Field)), this, SLOT(initializeGame(Field)));
+    //QObject::connect(_menu, SIGNAL(fieldChoosed(Field)), this, SLOT(initializeGame(Field)));
+    QObject::connect(_menu, SIGNAL(gameLaunched()), this, SLOT(initializeGame()));
     QObject::connect(_menu, SIGNAL(benchmarkLaunched(Field)), this, SLOT(lanchBenchmark(Field)));
 }
-
+/*
 void MainWindow::initializeGame(Field field)
 {
     _field = field;
 
     this->initializeGame();
 }
+*/
 
+void MainWindow::initializeGame()
+{
+    if(_game)
+    {
+        delete _game;
+        _game = 0;
+    }
+
+    if(_menu)
+    {
+        delete _menu;
+        _menu = 0;
+    }
+
+    Field field = _option.getField();
+
+    switch(field)
+    {
+    case Field::BOARD:
+    {
+        //BoardOption * opt = (BoardOption*)option;
+        _game = new BoardWidget( _option, this );
+        break;
+    }
+    case Field::CUBE:
+    {
+        _game = new CubeWidget( _option, this );
+        break;
+    }
+    case Field::TESSERACT:
+    {
+        _game = new TesseractWidget( _option, this);
+        break;
+    }
+    case Field::DONUT:
+        break;
+    }
+
+    this->setCentralWidget(_game);
+    this->centralWidget()->setFocus();
+
+    QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
+    QObject::connect(_game, SIGNAL(restartClicked()), this, SLOT(initializeGame()));
+
+}
+/*
 void MainWindow::initializeGame()
 {
     if(_game)
@@ -80,7 +129,7 @@ void MainWindow::initializeGame()
     QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
     QObject::connect(_game, SIGNAL(restartClicked()), this, SLOT(initializeGame()));
 }
-
+*/
 void MainWindow::lanchBenchmark(Field f)
 {
     if(f == Field::BOARD)

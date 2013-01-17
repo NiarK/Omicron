@@ -1,7 +1,7 @@
 #include "cubewidget.h"
 
-CubeWidget::CubeWidget(QWidget *parent) :
-    GameWidget(parent)
+CubeWidget::CubeWidget(const GameOption &option, QWidget *parent) :
+    GameWidget(option, parent)
 {
     this->setController(new CubeController());
 }

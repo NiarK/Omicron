@@ -3,7 +3,6 @@
 PropertyWidget::PropertyWidget(QString picture, QWidget *parent) :
     QWidget(parent)
 {
-
     QLabel * preview = new QLabel();
     QPixmap pixmap(picture);
     preview->setPixmap(pixmap.scaled(QSize(480,480), Qt::KeepAspectRatio));

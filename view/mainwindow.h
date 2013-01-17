@@ -13,12 +13,14 @@
 #include <vector>
 
 // --- Include Omicron --- //
+#include "view/gameoption.h"
 #include "view/field.h"
 #include "view/menu.h"
 #include "view/gamewidget.h"
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
 #include "view/tesseractwidget.h"
+
 
 // --- Temporaire --- //
 #include "controller/boardcontroller.h"
@@ -37,13 +39,15 @@ signals:
 
 public slots:
     void initializeMenu();
-    void initializeGame(Field field);
+    //void initializeGame(Field field);
+    //void initializeGame();
     void initializeGame();
     void lanchBenchmark(Field f);
 
 protected:
 
 private:
+    GameOption _option;
 
     Menu* _menu;
     GameWidget* _game;

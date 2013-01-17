@@ -22,27 +22,41 @@ class Menu : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Menu(QWidget *parent = 0);
+    explicit Menu(GameOption & option, QWidget *parent = 0);
     virtual  ~Menu();
+
+    virtual void updateIHM();
+    void setPropertyWidget();
     
 signals:
     void fieldChoosed(Field f);
     void benchmarkLaunched(Field f);
+    void gameLaunched();
     
 public slots:
     void emitFieldChoosed();
     void emitBenchmarkLaunched();
-    void setPropertyWidget();
+    void emitGameLaunched();
+    virtual void updateOption();
 
 private:
+    GameOption & _option;
 
     QRadioButton * _rbBoard;
     QRadioButton * _rbCube;
     QRadioButton * _rbTesseract;
     QRadioButton * _rbDonut;
 
+    QRadioButton * _rbAI;
+    QRadioButton * _rbPlayerPacman;
+    QRadioButton * _rbPlayerGhost;
+
+    QRadioButton * _rbRandomAI;
+    QRadioButton * _rbWiseAI;
+
     PropertyWidget * _property;
     QBoxLayout * _lytProperty;
+
     
 };
 
