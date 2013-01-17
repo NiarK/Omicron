@@ -56,11 +56,20 @@ private:
      * @param nb Contient le numéro du ghost à déplacer
      */
     virtual void calculateMovement(unsigned int nb);
+    /**
+     * @brief reset remise à l'état initial du jeu
+     */
+    virtual void reset();
+    /**
+     * @brief randomPacman Permet de faire le déplacement aléatoire du pacman
+     */
+    virtual void randomPacman();
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;
     unsigned int _height;
     unsigned int _runner;
+    bool _selected;
 };
 
 #endif // BOARD_H
