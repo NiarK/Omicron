@@ -20,7 +20,7 @@ GameOption::GameOption(Field f, GameType gt, PacmanAI ai) :
 }
 */
 
-Field GameOption::getField()
+Field GameOption::getField() const
 {
     return _field;
 }
@@ -30,7 +30,7 @@ void GameOption::setField(Field f)
     _field = f;
 }
 
-GameType GameOption::getGameType()
+GameType GameOption::getGameType() const
 {
     return _gameType;
 }
@@ -40,7 +40,7 @@ void GameOption::setGameType(GameType gt)
     _gameType = gt;
 }
 
-PacmanAI GameOption::getPacmanAI()
+PacmanAI GameOption::getPacmanAI() const
 {
     return _pacmanAI;
 }

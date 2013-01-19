@@ -1,32 +1,7 @@
 #ifndef GAMEOPTION_H
 #define GAMEOPTION_H
 
-enum class Field
-{
-    BOARD,
-    DONUT,
-    CUBE,
-    TESSERACT
-};
-
-enum class GameType
-{
-    AI,
-    GHOST_PLAYER,
-    PACMAN_PLAYER
-};
-
-enum class PacmanAI
-{
-    RANDOM,
-    WISE
-};
-
-enum class TesseractDisplay
-{
-    IN_3D,
-    IN_2D
-};
+#include "view/option.h"
 
 class GameOption
 {
@@ -34,13 +9,13 @@ public:
     GameOption();
     GameOption(Field f, GameType gt, PacmanAI ai);
 
-    Field getField();
+    Field getField() const;
     void setField(Field f);
 
-    GameType getGameType();
+    GameType getGameType() const;
     void setGameType(GameType gt);
 
-    PacmanAI getPacmanAI();
+    PacmanAI getPacmanAI() const;
     void setPacmanAI(PacmanAI ai);
 
     unsigned int getWidth() const;
@@ -49,8 +24,8 @@ public:
     unsigned int getHeight() const;
     void setHeight(unsigned int h);
 
-    void setDisplay(TesseractDisplay d);
     TesseractDisplay getDisplay() const;
+    void setDisplay(TesseractDisplay d);
 
 private:
     Field _field;

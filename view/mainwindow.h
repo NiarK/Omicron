@@ -14,7 +14,6 @@
 
 // --- Include Omicron --- //
 #include "view/gameoption.h"
-#include "view/field.h"
 #include "view/menu.h"
 #include "view/gamewidget.h"
 #include "view/boardwidget.h"

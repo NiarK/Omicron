@@ -3,6 +3,7 @@
 
 GameWidget::GameWidget(const GameOption &option, QWidget *parent) :
     QWidget(parent),
+    _option(option),
     _btnReturn(0),
     _btnNextMove(0),
     _lblMovementGhostCounter(0),
@@ -108,6 +109,8 @@ void GameWidget::setController(GameController *gc)
 
     QObject::connect(_btnNextMove, SIGNAL(clicked()), this, SLOT(nextMove()));
 
+
+    _gameController->setPacmanAI(_option.getPacmanAI());
     //_gameController->benchmark(1000);
     //_gameController->reset();
 }

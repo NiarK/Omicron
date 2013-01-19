@@ -10,6 +10,7 @@
 #include <cmath>
 
 // --- Include Omicron --- //
+#include "view/option.h"
 #include "model/hypercube.h"
 
 /*
@@ -40,7 +41,14 @@ public:
      * @param vertex est le numero d'un noeud
      * @return un vector contenant la liste des noeuds liés a un noeud donné.
      */
-    virtual std::vector<unsigned int>   getEdges(unsigned int vertex)   const;
+    virtual std::vector<unsigned int> getEdges(unsigned int vertex) const;
+
+    /**
+     * @brief getEdges permet de récuperer une list contenant la liste des noeuds liés a un noeud donné.
+     * @param vertex est le numero d'un noeud
+     * @return une list contenant la liste des noeuds liés a un noeud donné.
+     */
+    virtual std::list<unsigned int> getEdgesList(unsigned int vertex) const;
 
     /**
      * @brief getVertexNumber permet de recuperer le nombre de noeuds contenu dans le graphe.
@@ -118,6 +126,8 @@ public:
      */
     virtual void reset();
 
+    void setPacmanAI(PacmanAI ai);
+
 protected:
     /**
      * @brief getAdjacencyMatrix recupère un pointeur sur la matrice d'adjacence du graphe.
@@ -142,6 +152,11 @@ private:
     virtual void moveGhost() = 0;
 
     /**
+     * @brief movePacmanRandom Fait bouger le pacman de façon aléatoire.
+     */
+    virtual void movePacmanRandom();
+
+    /**
      * @brief generatePosition génère aléatoirement une position dans le graphe qui n'est pas déjà prise.
      * @return une position libre.
      */
@@ -157,6 +172,7 @@ private:
     QTime _time;
 
     bool _gameOver;
+    PacmanAI _ai;
 
     //unsigned int _vertexNumber;
 };

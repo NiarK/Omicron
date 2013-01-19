@@ -11,8 +11,9 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
     _timePacmanIA(),
     _timeGhostIA(),
     _time(),
-    _gameOver(false)
-    //_vertexNumber(0)
+    _gameOver(false),
+    _ai(PacmanAI::RANDOM)
+  //_vertexNumber(0)
 {
     // Initialisation du random
     QTime time = QTime::currentTime();
@@ -94,6 +95,27 @@ std::vector<unsigned int> GameController::getEdges(unsigned int vertex) const
     return edges;
 }
 
+std::list<unsigned int> GameController::getEdgesList(unsigned int vertex) const
+{
+    if(vertex >= _matrix->size1())
+    {
+        throw std::bad_alloc();
+    }
+
+    unsigned int size = _matrix->size1();
+    std::list<unsigned int> edges;
+
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        if( (*_matrix)( vertex, i ) == 1 )
+        {
+            edges.push_back(i);
+        }
+    }
+
+    return edges;
+}
+
 unsigned int GameController::getVertexNumber() const
 {
     return _matrix->size1();
@@ -155,9 +177,14 @@ bool GameController::nextMove()
     {
         //_pacmanOld = _pacman;
 
-        _time.restart();
-        this->movePacman();
-        _timePacmanIA.push_back(_time.elapsed());
+        if(_ai == PacmanAI::WISE)
+        {
+            this->movePacman();
+        }
+        else if(_ai == PacmanAI::RANDOM)
+        {
+            this->movePacmanRandom();
+        }
 
         isNothingWrong = this->checkPacmanMoved();
         //a = Actor::PACMAN;
@@ -309,4 +336,41 @@ void GameController::benchmark(unsigned int n)
 bool GameController::gameOver() const
 {
     return _gameOver;
+}
+
+void GameController::movePacmanRandom()
+{
+    bool move = false;
+    unsigned int random;
+    unsigned int i;
+
+    std::vector<unsigned int> edges = this->getEdges(_pacman);
+    unsigned int edgeNumber = edges.size();
+    unsigned int ghostNumber = _ghosts.size();
+
+    while(move == false && edgeNumber != 0)
+    {
+        random = rand() % edgeNumber;
+
+        for(i = 0; i < ghostNumber && _ghosts[i] != edges[random]; ++i);
+
+        if( i == ghostNumber )
+        {
+            _pacman = edges[random];
+            move = true;
+        }
+        else
+        {
+            std::vector<unsigned int>::iterator it = edges.begin();
+            std::advance(it, random);
+            edges.erase(it);
+            edgeNumber = edges.size();
+            move = false;
+        }
+    }
+}
+
+void GameController::setPacmanAI(PacmanAI ai)
+{
+    _ai = ai;
 }

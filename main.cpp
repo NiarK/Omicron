@@ -24,3 +24,7 @@ int main(int argc, char *argv[])
 // maj des option en fct de la fenetre
 // maj de la fenetre en fct des options
 // revoir algo du pacman sur le tesseract
+// mettre getEdges dans hypercube ?
+
+// rapport :
+// - limite -> la map aurait put savoir si un ghost se trouvait sur une case, au lieu d'itéré sur chacun pour savoir ou ils sont.

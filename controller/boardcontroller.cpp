@@ -18,6 +18,8 @@ BoardController::BoardController(unsigned int width, unsigned int height) :
 
 void BoardController::reset()
 {
+    GameController::reset();
+
     _runner = 0;
     _selected = false;
 }

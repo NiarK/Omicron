@@ -22,7 +22,6 @@
 // --- Include Omicron --- //
 #include "view/gameoption.h"
 #include "controller/gamecontroller.h"
-#include "view/field.h"
 
 class GameWidget : public QWidget
 {
@@ -59,6 +58,8 @@ private:
     virtual void updatePacman();
     virtual void updateGhost();
     virtual void updateActor();
+
+    const GameOption & _option;
 
     QPushButton* _btnReturn;
     QPushButton* _btnNextMove;

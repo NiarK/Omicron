@@ -40,7 +40,6 @@ HEADERS  += \
     controller/gamecontroller.h \
     controller/boardcontroller.h \
     controller/cubecontroller.h \
-    view/field.h \
     view/gamewidget.h \
     controller/tesseractcontroller.h \
     view/tesseractwidget.h \
@@ -48,7 +47,8 @@ HEADERS  += \
     view/boardpropertywidget.h \
     view/tesseractpropertywidget.h \
     view/cubepropertywidget.h \
-    view/gameoption.h
+    view/gameoption.h \
+    view/option.h
 
 OTHER_FILES +=
 

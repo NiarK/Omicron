@@ -60,7 +60,7 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     _rbRandomAI = new QRadioButton("Aleatoire", this);
     _rbWiseAI = new QRadioButton("Sense", this);
     //_rbWiseAI->setChecked(true);
-    _rbRandomAI->setEnabled(false);
+    //_rbRandomAI->setEnabled(false);
 
     QVBoxLayout * lytPacmanAI = new QVBoxLayout();
     lytPacmanAI->addWidget(_rbRandomAI);
@@ -164,6 +164,14 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     QObject::connect(_rbBoard, SIGNAL(clicked()), this, SLOT(updateOption()));
     QObject::connect(_rbCube, SIGNAL(clicked()), this, SLOT(updateOption()));
     QObject::connect(_rbTesseract, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbDonut, SIGNAL(clicked()), this, SLOT(updateOption()));
+
+    QObject::connect(_rbRandomAI, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbWiseAI, SIGNAL(clicked()), this, SLOT(updateOption()));
+
+    QObject::connect(_rbAI, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbPlayerGhost, SIGNAL(clicked()), this, SLOT(updateOption()));
+    QObject::connect(_rbPlayerPacman, SIGNAL(clicked()), this, SLOT(updateOption()));
 }
 
 Menu::~Menu()
