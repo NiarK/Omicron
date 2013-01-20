@@ -2,10 +2,14 @@
 
 #include "view/mainwindow.h"
 #include <QApplication>
+#include <QTextCodec>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //QTextCodec::setCodecForTr(QTextCodec::codecForName("latin1"));
+
     MainWindow w;
     w.show();
     
@@ -21,8 +25,7 @@ int main(int argc, char *argv[])
 //TODO: initialiser matrice ? v
 // detructeur, appelé le parent ? je pense que oui
 // exception quand il n'y a pas de mouvement (attention le pacman peut ne pas bouger)
-// maj des option en fct de la fenetre
-// maj de la fenetre en fct des options
+// augmenter taille des cercles
 // revoir algo du pacman sur le tesseract
 // mettre getEdges dans hypercube ?
 

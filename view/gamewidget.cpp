@@ -55,7 +55,7 @@ GameWidget::~GameWidget()
 
 void GameWidget::emitReturnClicked() const
 {
-    emit returnClicked();
+    emit terminated();
 }
 
 
@@ -193,12 +193,7 @@ void GameWidget::nextMove()
         QString text = "Les ghosts ont mis ";
         text += QString("%1").arg( _gameController->getGhostMovementCounter() );
         text += " coups pour attraper le Pacman.\n";
-        text += "En moyenne le pacman réfléchissait pendant : ";
-        text += QString("%1").arg( _gameController->getAveragePacmanIATime() );
-        text += " ms.\n";
-        text += "En moyenne les ghosts réfléchissaient pendant : ";
-        text += QString("%1").arg( _gameController->getAverageGhostIATime() );
-        text += " ms.\n";
+
         msgBox.setDetailedText(text);
 
         QPushButton *btnRestart = msgBox.addButton(tr("Recommener"), QMessageBox::AcceptRole);
@@ -207,11 +202,11 @@ void GameWidget::nextMove()
 
         if (msgBox.clickedButton() == btnRestart)
         {
-            emit restartClicked();
+            emit restarted();
         }
         else if (msgBox.clickedButton() == btnMenu)
         {
-            emit returnClicked();
+            emit terminated();
         }
     }
 }

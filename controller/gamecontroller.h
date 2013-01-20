@@ -86,18 +86,6 @@ public:
     bool pacmanIsCatched();
 
     /**
-     * @brief getAveragePacmanIATime calcule le temps moyen d'execution de l'algo du pacman.
-     * @return le temps moyen d'execution de l'algo du pacman.
-     */
-    unsigned int getAveragePacmanIATime();
-
-    /**
-     * @brief getAveragePacmanIATime calcule le temps moyen d'execution de l'algo des ghosts.
-     * @return le temps moyen d'execution de l'algo des ghosts.
-     */
-    unsigned int getAverageGhostIATime();
-
-    /**
      * @brief checkPacmanMoved verifie si le pacman a bien bougé pendant ce tour.
      * @return vrai si le pacman bouge.
      */
@@ -126,6 +114,10 @@ public:
      */
     virtual void reset();
 
+    /**
+     * @brief setPacmanAI permet de changer l'IA du pacman.
+     * @param ai L'IA du pacman.
+     */
     void setPacmanAI(PacmanAI ai);
 
 protected:
@@ -167,9 +159,6 @@ private:
 
     bool _pacmanMoved;
     unsigned int _movementCounter;
-    std::vector<unsigned int> _timePacmanIA;
-    std::vector<unsigned int> _timeGhostIA;
-    QTime _time;
 
     bool _gameOver;
     PacmanAI _ai;

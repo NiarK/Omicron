@@ -284,67 +284,6 @@ int BoardController::rangeMin(int value){
     }
 }
 
-void BoardController::randomPacman()
-{
-    bool move = false;
-    int random = rand() % 4;
-    int w = getWidth();
-    while(move == false)
-    {
-        switch(random)
-        {
-        case 0:
-            if(_pacman >= w && _pacman - w != _ghosts[0] && _pacman - w != _ghosts[1])
-            {
-                _pacman = _pacman - w;
-                move = true;
-            }
-            else
-            {
-                random++;
-                random = random % 4;
-            }
-            break;
-        case 1:
-            if(_pacman % 8 != 7 && _pacman + 1 != _ghosts[0] && _pacman + 1 != _ghosts[1])
-            {
-                _pacman = _pacman + 1;
-                move = true;
-            }
-            else
-            {
-                random++;
-                random = random % 4;
-            }
-            break;
-        case 2:
-            if(_pacman < w * getHeight() - w && _pacman + w != _ghosts[0] && _pacman + w != _ghosts[1])
-            {
-                _pacman = _pacman + w;
-                move = true;
-            }
-            else
-            {
-                random++;
-                random = random % 4;
-            }
-            break;
-        case 3:
-            if(_pacman % 8 != 0 && _pacman - 1 != _ghosts[0] && _pacman - 1 != _ghosts[1])
-            {
-                _pacman = _pacman - 1;
-                move = true;
-            }
-            else
-            {
-                random++;
-                random = random % 4;
-            }
-            break;
-        }
-    }
-}
-
 void BoardController::movePacman()
 {
     int left, right, up, down;

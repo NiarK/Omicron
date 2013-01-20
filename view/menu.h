@@ -30,7 +30,7 @@ public:
     
 signals:
     void fieldChoosed(Field f);
-    void benchmarkLaunched(Field f);
+    void benchmarkLaunched();
     void gameLaunched();
     
 public slots:
