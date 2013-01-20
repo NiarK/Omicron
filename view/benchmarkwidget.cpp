@@ -152,6 +152,7 @@ void BenchmarkWidget::launchBenchmark()
 {
     _btnRestart->setEnabled(false);
     _btnReturn->setEnabled(false);
+    _txtSummary->clear();
     _benchmark->run(_txtOccurenceNumber->text().toInt());
 }
 
