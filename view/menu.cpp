@@ -71,10 +71,24 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     gbPacmanAI->setLayout(lytPacmanAI);
     // ! Pacman IA
 
+    // Partie normale
+    QPushButton * btnNormalGame = new QPushButton("Partie normale",this);
+    QPushButton * btnBenchmark = new QPushButton("Benchmark !", this);
+
+    QVBoxLayout * lytGbGameLauncher = new QVBoxLayout();
+    lytGbGameLauncher->addWidget(btnNormalGame);
+    lytGbGameLauncher->addWidget(btnBenchmark);
+    lytGbGameLauncher->addStretch();
+
+    QGroupBox * gbGameLauncher = new QGroupBox("Lancement du jeu", this);
+    gbGameLauncher->setLayout(lytGbGameLauncher);
+    // !  Partie normale
+
     QVBoxLayout * lytGameProperty = new QVBoxLayout();
     lytGameProperty->addWidget(gbField);
     lytGameProperty->addWidget(gbGameType);
     lytGameProperty->addWidget(gbPacmanAI);
+    lytGameProperty->addWidget(gbGameLauncher);
     // --- --- Propriétés de la partie
 
     // --- --- Propriétés du terrain
@@ -98,8 +112,6 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     lytLegend->addWidget(lblGhost);
     lytLegend->addStretch();
 
-    //_property = new BoardPropertyWidget(this);
-
     _lytProperty = new QVBoxLayout();
     _lytProperty->addLayout(lytLegend);
 
@@ -112,46 +124,12 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     lytMain->addWidget(gbFieldProperty);
     // --- --- ! Layout principale
 
-    // --- --- Partie normale
-    QPushButton * btnNormalGame = new QPushButton("Partie normale",this);
-
-    QHBoxLayout * lytGbGameLauncher = new QHBoxLayout();
-    lytGbGameLauncher->addWidget(btnNormalGame);
-    lytGbGameLauncher->addStretch();
-
-    QGroupBox * gbGameLauncher = new QGroupBox("Lancement du jeu", this);
-    gbGameLauncher->setLayout(lytGbGameLauncher);
-
-    // Benchmark
-    QLabel * lblBenchmark = new QLabel("Nombre de partie : ");
-    QLineEdit * txtBenchmark = new QLineEdit("10000", this);
-    QPushButton * btnBenchmark = new QPushButton("Benchmark !", this);
-    //btnBenchmark->setEnabled(false);
-
-    QHBoxLayout * lytGbBenchmark = new QHBoxLayout();
-    lytGbBenchmark->addWidget(lblBenchmark);
-    lytGbBenchmark->addWidget(txtBenchmark);
-    lytGbBenchmark->addWidget(btnBenchmark);
-    lytGbBenchmark->addStretch();
-
-    QGroupBox * gbBenchmark = new QGroupBox("Benchmark", this);
-    gbBenchmark->setLayout(lytGbBenchmark);
-    // ! Benchmark
-
-    // Lancement du jeu
-    QHBoxLayout * lytGameLauncher = new QHBoxLayout();
-    lytGameLauncher->addWidget(gbGameLauncher);
-    lytGameLauncher->addWidget(gbBenchmark);
-    // ! Lancement du jeu
-
-    // ---!  Partie normale
-
     // --- ---
 
 
     QVBoxLayout * layout = new QVBoxLayout(this);
     layout->addLayout(lytMain);
-    layout->addLayout(lytGameLauncher);
+    //layout->addLayout(lytGameLauncher);
     this->setLayout(layout);
 
     this->setPropertyWidget();
@@ -197,6 +175,7 @@ void Menu::emitFieldChoosed()
 
 void Menu::emitBenchmarkLaunched()
 {
+    /*
     if( _rbBoard->isChecked() )
     {
         emit benchmarkLaunched(Field::BOARD);
@@ -209,6 +188,8 @@ void Menu::emitBenchmarkLaunched()
     {
         emit benchmarkLaunched(Field::TESSERACT);
     }
+    */
+    emit benchmarkLaunched();
 }
 
 void Menu::emitGameLaunched()

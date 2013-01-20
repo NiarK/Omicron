@@ -19,6 +19,7 @@
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
 #include "view/tesseractwidget.h"
+#include "view/benchmarkwidget.h"
 
 
 // --- Temporaire --- //
@@ -34,6 +35,8 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void deleteCentralWidget();
+
 signals:
 
 public slots:
@@ -41,6 +44,7 @@ public slots:
     //void initializeGame(Field field);
     //void initializeGame();
     void initializeGame();
+    void initializeBenchmark();
     void lanchBenchmark(Field f);
 
 protected:
@@ -50,6 +54,7 @@ private:
 
     Menu* _menu;
     GameWidget* _game;
+    BenchmarkWidget * _benchmark;
 
     Field _field;
 

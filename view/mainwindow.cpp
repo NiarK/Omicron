@@ -4,7 +4,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       _option(),
       _menu(0),
-      _game(0)
+      _game(0),
+      _benchmark(0)
 {
 
     this->initializeMenu();
@@ -22,23 +23,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeMenu()
 {
-
-    if(!_menu)
+    /*
+    if(_menu)
     {
-        _menu = new Menu(_option, this);
+        delete _menu;
+        _menu = 0;
     }
+    */
 
-    if(_game)
-    {
-        delete _game;
-        _game = 0;
-    }
+    this->deleteCentralWidget();
+
+    _menu = new Menu(_option, this);
 
     this->setCentralWidget(_menu);
 
     //QObject::connect(_menu, SIGNAL(fieldChoosed(Field)), this, SLOT(initializeGame(Field)));
     QObject::connect(_menu, SIGNAL(gameLaunched()), this, SLOT(initializeGame()));
-    QObject::connect(_menu, SIGNAL(benchmarkLaunched(Field)), this, SLOT(lanchBenchmark(Field)));
+    QObject::connect(_menu, SIGNAL(benchmarkLaunched()), this, SLOT(initializeBenchmark()));
 }
 /*
 void MainWindow::initializeGame(Field field)
@@ -51,6 +52,7 @@ void MainWindow::initializeGame(Field field)
 
 void MainWindow::initializeGame()
 {
+    /*
     if(_game)
     {
         delete _game;
@@ -62,6 +64,8 @@ void MainWindow::initializeGame()
         delete _menu;
         _menu = 0;
     }
+    */
+    this->deleteCentralWidget();
 
     Field field = _option.getField();
 
@@ -90,10 +94,31 @@ void MainWindow::initializeGame()
     this->setCentralWidget(_game);
     this->centralWidget()->setFocus();
 
-    QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
-    QObject::connect(_game, SIGNAL(restartClicked()), this, SLOT(initializeGame()));
+    QObject::connect(_game, SIGNAL(terminated()), this, SLOT(initializeMenu()));
+    QObject::connect(_game, SIGNAL(restarted()), this, SLOT(initializeGame()));
 
 }
+
+void MainWindow::initializeBenchmark()
+{
+    /*
+    if(_benchmark)
+    {
+        delete _benchmark;
+        _benchmark = 0;
+    }
+    */
+
+    this->deleteCentralWidget();
+
+    _benchmark = new BenchmarkWidget(_option, this);
+
+    this->setCentralWidget(_benchmark);
+    this->centralWidget()->setFocus();
+
+    QObject::connect(_benchmark, SIGNAL(terminated()), this,SLOT(initializeMenu()));
+}
+
 /*
 void MainWindow::initializeGame()
 {
@@ -167,3 +192,23 @@ void MainWindow::lanchBenchmark(Field f)
 }
 
 
+void MainWindow::deleteCentralWidget()
+{
+    if(_game)
+    {
+        delete _game;
+        _game = 0;
+    }
+
+    if(_menu)
+    {
+        delete _menu;
+        _menu = 0;
+    }
+
+    if(_benchmark)
+    {
+        delete _benchmark;
+        _benchmark = 0;
+    }
+}

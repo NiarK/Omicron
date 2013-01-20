@@ -41,8 +41,8 @@ public:
     static const int THICK = 2;
 
 signals:
-    void returnClicked() const;
-    void restartClicked() const;
+    void terminated() const;
+    void restarted() const;
 
 public slots:
     void emitReturnClicked() const;
