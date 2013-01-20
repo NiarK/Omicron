@@ -64,6 +64,18 @@ private:
      * @brief randomPacman Permet de faire le déplacement aléatoire du pacman
      */
     virtual void randomPacman();
+    /**
+     * @brief absolu Passe en valeur absolue
+     * @param value Valeur à passer en absolu
+     * @return la valeur en absolue
+     */
+    virtual int absolu(int value);
+    /**
+     * @brief esperance Calcul le nombre de coup estimé pour bloquer le pacman
+     * @param nb numéro du ghost
+     * @return nombre de coup
+     */
+    virtual int esperance(int nb);
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;

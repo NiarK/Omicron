@@ -78,6 +78,94 @@ bool BoardController::parityTest(int nb){
     else return false;
 }
 
+int BoardController::absolu(int value)
+{
+    if(value < 0)
+        return -value;
+    return value;
+}
+
+int BoardController::esperance(int nb){
+    int w = getWidth();
+    int h = getHeight();
+    int value;
+    if(_ghosts[nb] % w > _pacman % w)
+    {//pacman à gauche du ghost
+        if(_ghosts[nb] / w > _pacman / w)
+        {//pacman au dessus du ghost
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - 1);
+            value += absolu(_ghosts[nb] / w - 1);
+        }
+        else if(_ghosts[nb] / w < _pacman /w)
+        {//pacman au dessous du ghost ou même ligne
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - 1);
+            value += absolu(_ghosts[nb] / w - ( h - 2 ) );
+        }
+        else // alors ils sont sur la même ligne
+        {
+            value = absolu(_ghosts[nb] % w - 1);
+            value += absolu(_ghosts[nb] / w - 1);
+            int valuebis = absolu(_ghosts[nb] % w - 1);
+            valuebis += absolu(_ghosts[nb] / w - ( h - 2 ) );
+            if(value < valuebis)
+                value = valuebis;
+        }
+    }
+    else if(_ghosts[nb] % w < _pacman % w)
+    {// pacman à droite ou même colonne
+        if(_ghosts[nb] / w > _pacman / w)
+        {//pacman au dessus du ghost
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - ( w - 2 ));
+            value += absolu(_ghosts[nb] / w - 1);
+        }
+        else if(_ghosts[nb] / w < _pacman / w)
+        {//pacman au dessous du ghost
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - ( w - 2 ) );
+            value += absolu(_ghosts[nb] / w - ( h - 2 ) );
+        }
+        else
+        {
+            value = absolu(_ghosts[nb] % w - ( w - 2 ));
+            value += absolu(_ghosts[nb] / w - 1);
+            int valuebis = absolu(_ghosts[nb] % w - ( w - 2 ) );
+            valuebis += absolu(_ghosts[nb] / w - ( h - 2 ) );
+            if(value < valuebis)
+                value = valuebis;
+        }
+    }
+    else
+    {
+        int valuebis;
+        if(_ghosts[nb] / w > _pacman / w)
+        {//pacman au dessus du ghost
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - ( w - 2 ));
+            value += absolu(_ghosts[nb] / w - 1);
+            valuebis = absolu(_ghosts[nb] % w - 1);
+            valuebis += absolu(_ghosts[nb] / w - 1);
+        }
+        else
+        {//pacman au dessous du ghost
+            // donc le pacman sera bloqué quand le ghost sera à une case en diagonale du coin
+            value = absolu(_ghosts[nb] % w - ( w - 2 ) );
+            value += absolu(_ghosts[nb] / w - ( h - 2 ) );
+            valuebis = absolu(_ghosts[nb] % w - 1);
+            valuebis += absolu(_ghosts[nb] / w - ( h - 2 ) );
+        }
+        if(value < valuebis)
+            value = valuebis;
+    }
+    bool parityg = parityTest(_ghosts[nb]);
+    bool parityp = parityTest(_pacman);
+    if(parityg == parityp)
+        ++value;
+    return value;
+}
+
 void BoardController::calculateMovement(unsigned int nb){
     //Définition des variables
     int vertical;
@@ -259,8 +347,6 @@ void BoardController::randomPacman()
 
 void BoardController::movePacman()
 {
-    randomPacman();
-    /*
     int left, right, up, down;
     unsigned int w = getWidth();
     left = rangeMin(-1);
@@ -322,7 +408,6 @@ void BoardController::movePacman()
     }else if( down != 0 ){
         _pacman += w;
     }
-    */
 }
 
 void BoardController::moveGhost()
@@ -339,9 +424,11 @@ void BoardController::moveGhost()
         if(_selected == false)
         {
             parity = parityTest(_pacman);
-            if(range1 < range2)
+            int esperance0 = esperance(0);
+            int esperance1 = esperance(1);
+            if(esperance0 < esperance1)
                 _runner = 0;
-            else if(range1 > range2)
+            else if(esperance0 > esperance1)
                 _runner = 1;
             else // alors les distances sont égales
             {
