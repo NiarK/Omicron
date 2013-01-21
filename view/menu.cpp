@@ -57,8 +57,8 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     // ! Type de jeu
 
     // Pacman IA
-    _rbRandomAI = new QRadioButton("Aleatoire", this);
-    _rbWiseAI = new QRadioButton("Sense", this);
+    _rbRandomAI = new QRadioButton("Aléatoire", this);
+    _rbWiseAI = new QRadioButton("Sensé", this);
     //_rbWiseAI->setChecked(true);
     //_rbRandomAI->setEnabled(false);
 

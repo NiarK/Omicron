@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
 //TODO: initialiser matrice ? v
 // detructeur, appelé le parent ? je pense que oui
 // exception quand il n'y a pas de mouvement (attention le pacman peut ne pas bouger)
-// augmenter taille des cercles
 // revoir algo du pacman sur le tesseract
 // mettre getEdges dans hypercube ?
 

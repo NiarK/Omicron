@@ -21,6 +21,8 @@ TesseractPropertyWidget::TesseractPropertyWidget(GameOption &option, QWidget *pa
     QBoxLayout * layout = (QBoxLayout *)this->layout();
     layout->addLayout(lytDisplay);
 
+    this->updateIHM();
+
     QObject::connect(_rb2D, SIGNAL(clicked()), this, SLOT(updateOption()));
     QObject::connect(_rb3D, SIGNAL(clicked()), this, SLOT(updateOption()));
 }
