@@ -24,18 +24,28 @@ GameWidget::GameWidget(const GameOption &option, QWidget *parent) :
     _view = new QGraphicsView(_scene);
     _view->setGeometry(0,0,800,600);
 
-    _btnReturn = new QPushButton("Retour", this);
-    _btnNextMove = new QPushButton("Movement suivant", this);
+    _btnReturn = new QPushButton("&Retour", this);
+    _btnNextMove = new QPushButton("Movement &suivant", this);
     _lblMovementGhostCounter = new QLabel();
 
     QHBoxLayout * controlLayout = new QHBoxLayout();
     controlLayout->addWidget(_btnReturn);
-    controlLayout->addWidget(_lblMovementGhostCounter);
+    controlLayout->addStretch();
     controlLayout->addWidget(_btnNextMove);
 
+    QLabel * lblTextCounter = new QLabel("Nombre de coup(s) joué : ");
+    QLabel * lblShortcut = new QLabel("Mouvement suivant : espace");
+
+    QHBoxLayout * lytCounter = new QHBoxLayout();
+    lytCounter->addWidget(lblTextCounter);
+    lytCounter->addWidget(_lblMovementGhostCounter);
+    lytCounter->addStretch();
+    lytCounter->addWidget(lblShortcut);
+
     _layout = new QVBoxLayout();
-    _layout->addLayout(controlLayout);
+    _layout->addLayout(lytCounter);
     _layout->addWidget(_view);
+    _layout->addLayout(controlLayout);
 
     this->setLayout(_layout);
 
@@ -63,6 +73,11 @@ void GameWidget::setController(GameController *gc)
 {
     _gameController = gc;
 
+    QBrush brush(QColor("red"));
+    QPen pen(brush, 2);
+    QPen pacmanPen(QBrush(QColor("yellow")), 2);
+    QPen ghostPen(QBrush(QColor("cyan")), 2);
+
     // creation de la map
     unsigned int vertexNumber = _gameController->getVertexNumber();
     for(unsigned int i = 0; i < vertexNumber; ++i)
@@ -71,7 +86,7 @@ void GameWidget::setController(GameController *gc)
                                                                -GameWidget::RADIUS,
                                                                GameWidget::RADIUS * 2,
                                                                GameWidget::RADIUS * 2 );
-        ell->setPen( QPen( QColor( "red" ) ) );
+        ell->setPen( pen );
         ell->setZValue(1);
 
         _vertex.push_back( ell );
@@ -88,7 +103,7 @@ void GameWidget::setController(GameController *gc)
                                         GameWidget::RADIUS * 2 - GameWidget::THICK * 4,
                                         GameWidget::RADIUS * 2 - GameWidget::THICK * 4
                                         );
-    _pacman->setPen(QPen(QColor("yellow")));
+    _pacman->setPen(pacmanPen);
     _scene->addItem(_pacman);
     this->updatePacman();
 
@@ -101,7 +116,7 @@ void GameWidget::setController(GameController *gc)
                                                                  GameWidget::RADIUS * 2 - GameWidget::THICK * 2,
                                                                  GameWidget::RADIUS * 2 - GameWidget::THICK * 2
                                                                  );
-        ghost->setPen(QPen(QColor("cyan")));
+        ghost->setPen(ghostPen);
         _scene->addItem(ghost);
         _ghosts.push_back(ghost);
     }
@@ -113,6 +128,8 @@ void GameWidget::setController(GameController *gc)
     _gameController->setPacmanAI(_option.getPacmanAI());
     //_gameController->benchmark(1000);
     //_gameController->reset();
+
+    _view->setFocus();
 }
 
 GameController *GameWidget::getController() const
@@ -182,9 +199,7 @@ void GameWidget::nextMove()
     bool gameFinished = _gameController->gameOver();
     this->updateActor();
 
-    std::string text("Nombre de coup pour la capture : ");
-    // text += _gameController->getMovementCounter();
-    _lblMovementGhostCounter->setText("Nombre de coup pour la capture : ");
+    _lblMovementGhostCounter->setText(QString::number(_gameController->getGhostMovementCounter()));
 
     if(gameFinished)
     {
@@ -196,8 +211,8 @@ void GameWidget::nextMove()
 
         msgBox.setDetailedText(text);
 
-        QPushButton *btnRestart = msgBox.addButton(tr("Recommener"), QMessageBox::AcceptRole);
-        QPushButton *btnMenu = msgBox.addButton(tr("Revenir au menu"), QMessageBox::RejectRole);
+        QPushButton *btnRestart = msgBox.addButton(tr("&Recommener"), QMessageBox::AcceptRole);
+        QPushButton *btnMenu = msgBox.addButton(tr("Revenir au &menu"), QMessageBox::RejectRole);
         msgBox.exec();
 
         if (msgBox.clickedButton() == btnRestart)

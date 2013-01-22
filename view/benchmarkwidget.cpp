@@ -152,6 +152,7 @@ void BenchmarkWidget::launchBenchmark()
 {
     _btnRestart->setEnabled(false);
     _btnReturn->setEnabled(false);
+    _txtSummary->clear();
     _benchmark->run(_txtOccurenceNumber->text().toInt());
 }
 
@@ -200,7 +201,7 @@ void BenchmarkWidget::updateSummaryRandom(unsigned int m)
 
 void BenchmarkWidget::updateSummaryWise(unsigned int m)
 {
-    QString text("IA avisé \t\t Nombre de coups : ");
+    QString text("IA sensé \t\t Nombre de coups : ");
     text += QString::number(m);
     _txtSummary->append(text);
 }

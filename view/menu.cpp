@@ -57,8 +57,8 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     // ! Type de jeu
 
     // Pacman IA
-    _rbRandomAI = new QRadioButton("Aleatoire", this);
-    _rbWiseAI = new QRadioButton("Sense", this);
+    _rbRandomAI = new QRadioButton("AlÈatoire", this);
+    _rbWiseAI = new QRadioButton("SensÈ", this);
     //_rbWiseAI->setChecked(true);
     //_rbRandomAI->setEnabled(false);
 
@@ -72,8 +72,8 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     // ! Pacman IA
 
     // Partie normale
-    QPushButton * btnNormalGame = new QPushButton("Partie normale",this);
-    QPushButton * btnBenchmark = new QPushButton("Benchmark !", this);
+    QPushButton * btnNormalGame = new QPushButton("&Partie normale",this);
+    QPushButton * btnBenchmark = new QPushButton("&Benchmark !", this);
 
     QVBoxLayout * lytGbGameLauncher = new QVBoxLayout();
     lytGbGameLauncher->addWidget(btnNormalGame);
@@ -112,11 +112,16 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     lytLegend->addWidget(lblGhost);
     lytLegend->addStretch();
 
+
     _lytProperty = new QVBoxLayout();
     _lytProperty->addLayout(lytLegend);
 
+    QVBoxLayout * lytPropertySup = new QVBoxLayout();
+    lytPropertySup->addLayout(_lytProperty);
+    lytPropertySup->addStretch();
+
     QGroupBox * gbFieldProperty = new QGroupBox("Proprietes", this);
-    gbFieldProperty->setLayout(_lytProperty);
+    gbFieldProperty->setLayout(lytPropertySup);
     // --- --- ! Prorpi√©t√©s du terrain
 
     QHBoxLayout * lytMain = new QHBoxLayout();
