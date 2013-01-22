@@ -115,6 +115,7 @@ void BoardController::calculateMovement(unsigned int nb){
         {
             if( _ghosts[nb] - w == _ghosts[nb2] )
             {
+                _selected = false;
                 if( horizontal > 0 )
                     _ghosts[nb] -= 1;
                 else
@@ -127,6 +128,7 @@ void BoardController::calculateMovement(unsigned int nb){
         {
             if( _ghosts[nb] + w == _ghosts[nb2] )
             {
+                _selected = false;
                 if( horizontal > 0 )
                     _ghosts[nb] -= 1;
                 else
@@ -142,7 +144,9 @@ void BoardController::calculateMovement(unsigned int nb){
         //il faut donc faire partir à gauche le ghost
         if( horizontal > 0 )
         {
-            if( _ghosts[nb] - 1 == _ghosts[nb2] ){
+            if( _ghosts[nb] - 1 == _ghosts[nb2] )
+            {
+                _selected = false;
                 if( vertical > 0 )
                     _ghosts[nb] -= w;
                 else
@@ -153,7 +157,9 @@ void BoardController::calculateMovement(unsigned int nb){
         }
         else
         {
-            if( _ghosts[nb] + 1 == _ghosts[nb2] ){
+            if( _ghosts[nb] + 1 == _ghosts[nb2] )
+            {
+                _selected = false;
                 if( vertical > 0 )
                     _ghosts[nb] -= w;
                 else
@@ -175,9 +181,9 @@ int BoardController::rangeMin(int value){
         test = _pacman % w != 0;
     else if( value == 1 )
         test = _pacman % w != ( w - 1 );
-    else if( value == -w )
+    else if( value == (int)-w )
         test = _pacman >= w;
-    else if( value == w )
+    else if( value == (int)w )
         test = _pacman < w * h - w;
     else
         test = false;
@@ -261,9 +267,51 @@ void BoardController::movePacman()
     }
 }
 
+unsigned int BoardController::bestDiagonalGhost()
+{
+    unsigned int width = this->getWidth();
+    unsigned int xp = _pacman % width;
+    unsigned int yp = _pacman / width;
+    unsigned int xg, yg;
+    int xgp, ygp;
+    int ratio;
+    unsigned int ghost = 0;
+    int bestRatio = 0;
+
+    unsigned int size = _ghosts.size();
+    for(unsigned int i = 0; i < size; ++i)
+    {
+        xg = _ghosts[i] % width;
+        yg = _ghosts[i] / width;
+        xgp = xg - xp;
+        if(xgp < 0)
+        {
+            xgp *= -1;
+        }
+        ygp = yg - yp;
+        if(ygp < 0)
+        {
+            ygp *= -1;
+        }
+
+        ratio = xgp - ygp;
+        if(ratio < 0)
+        {
+            ratio = -ratio;
+        }
+
+        if(bestRatio > ratio || i == 0)
+        {
+            bestRatio = ratio;
+            ghost = i;
+        }
+    }
+
+    return ghost;
+}
+
 void BoardController::moveGhost()
 {
-    bool parity;
     int range1 = range(_pacman, _ghosts[0]);
     int range2 = range(_pacman, _ghosts[1]);
     if( range1 == 1 )
@@ -274,20 +322,24 @@ void BoardController::moveGhost()
     {
         if(_selected == false)
         {
-            parity = parityTest(_pacman);
+            bool parityP, parityG0, parityG1;
+            parityP = parityTest(_pacman);
+            parityG0 = parityTest(_ghosts[0]);
+            parityG1 = parityTest(_ghosts[1]);
+            if(parityP == parityG0)
+                ++range1;
+            if(parityP == parityG1)
+                ++range2;
             if(range1 < range2)
                 _runner = 0;
             else if(range1 > range2)
                 _runner = 1;
             else // alors les distances sont égales
             {
-                if(parityTest(_ghosts[0]) != parity)
-                    _runner = 0;
-                else
-                    _runner = 1;
+                _runner = bestDiagonalGhost();
             }
             _selected = true;
-            if(parityTest(_ghosts[_runner]) != parity)
+            if(parityTest(_ghosts[_runner]) != parityP)
                 calculateMovement(_runner);
             else
             {

@@ -163,6 +163,7 @@ private:
     bool _gameOver;
     PacmanAI _ai;
 
+
     //unsigned int _vertexNumber;
 };
 

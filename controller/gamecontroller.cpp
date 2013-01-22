@@ -48,12 +48,12 @@ GameController::~GameController()
 void GameController::reset()
 {
 
-    _pacman = this->generatePosition();
+    _pacman = this->generatePosition();//18
     _pacmanOld = _pacman;
     unsigned int ghost = _ghosts.size();
     for(unsigned int i = 0; i < ghost; ++i)
     {
-        _ghosts[i] = this->generatePosition();
+        _ghosts[i] = this->generatePosition();//3+i*4*8;//
         _ghostsOld[i] =  _ghosts[i];
     }
 

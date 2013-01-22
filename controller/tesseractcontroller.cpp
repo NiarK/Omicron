@@ -12,27 +12,40 @@ TesseractController::~TesseractController()
 
 void TesseractController::movePacman()
 {
+    /*
     unsigned int rangePG0 = _matrix->range( _pacman, _ghosts[0] );
     unsigned int rangePG1 = _matrix->range( _pacman, _ghosts[1] );
+//*/
     std::vector<unsigned int> edges = this->getEdges(_pacman);
     unsigned int edgeNumber = edges.size();
-    unsigned int secondPossibility = 0;
+    unsigned int secondPossibility = _pacman;
 
     // on cherche a fuir les ghosts
     for(unsigned int i = 0; i < edgeNumber; ++i)
     {
-        unsigned int rangeGE = _matrix->range( _ghosts[0], edges[i] ) + _matrix->range( _ghosts[1], edges[i] );
+        unsigned int rangeGE0 = _matrix->range( _ghosts[0], edges[i] );
+        unsigned int rangeGE1 = _matrix->range( _ghosts[1], edges[i] );
+        /*
+        unsigned int rangeGE = rangeGE0 + rangeGE1;
         unsigned int rangePG = rangePG0 + rangePG1;
+        //*/
 
         // on cherche quel noeuds est le plus loin des ghosts
+        /*
         if( rangeGE > rangePG )
+        {
+            _pacman = edges[i];
+            return;
+        }
+        //*/
+        if( rangeGE0 > 1 && rangeGE1 > 1 )
         {
             _pacman = edges[i];
             return;
         }
 
         // on cherche quel noeuds ne se rapproche pas d'un noeud
-        else if( secondPossibility == 0 && rangeGE == rangePG )
+        else if( secondPossibility == _pacman && rangeGE0 > 0 && rangeGE1 > 0 )
         {
             secondPossibility = edges[i];
         }

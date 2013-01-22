@@ -61,6 +61,12 @@ private:
      */
     virtual void reset();
 
+    /**
+     * @brief bestDiagonalGhost permet de récupéré l'index du ghost qui est le plus dans la diagonale du pacman
+     * @return numéro du ghost optimal
+     */
+    unsigned int bestDiagonalGhost();
+
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;

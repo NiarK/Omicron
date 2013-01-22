@@ -140,6 +140,8 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     this->setPropertyWidget();
     this->updateIHM();
 
+    btnNormalGame->setFocus();
+
     //QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitFieldChoosed()));
     QObject::connect(btnNormalGame, SIGNAL(clicked()), this, SLOT(emitGameLaunched()));
     QObject::connect(btnBenchmark, SIGNAL(clicked()), this, SLOT(emitBenchmarkLaunched()));
