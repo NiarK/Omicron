@@ -27,6 +27,38 @@ private:
      */
     virtual void moveGhost();
     /**
+     * @brief calculateEsperance additionne les variables passées en paramètre et test la parité pour renvoyer l'espérance correcte
+     * @param vertical distance en vertical
+     * @param horizontal distance en horizontal
+     * @param numGhost numéro du ghost qu'on test
+     * @return l'espérance avec la parité prise en compte
+     */
+    unsigned int calculateEsperance(int vertical, int horizontal, int numGhost);
+    /**
+     * @brief abs calcule la valeur absolue
+     * @param nb nombre à passer en absolu
+     * @return nb en absolu
+     */
+    unsigned int abs(int nb);
+    /**
+     * @brief bestDiagonalGhost choisi le ghost le plus dans la diagonale
+     * @return numéro du ghost le plus dans la diagonale
+     */
+    unsigned int bestDiagonalGhost();
+    /**
+     * @brief lookEsperance permet d'avoir les deux espérances par rapport à la position du pacman
+     * @param ghostNumber numéro du fantom
+     * @return un tableau avec les deux espérances
+     */
+    std::vector<int> lookEsperance(unsigned int ghostNumber);
+    /**
+     * @brief esperance sert à calculer l'espérance vers un lieu
+     * @param place lieu vers lequel on veut calculer l'espérance
+     * @param GhostNumber numéro du ghost qu'on test
+     * @return renvoi l'espérance
+     */
+    unsigned int esperance(int place, unsigned int GhostNumber);
+    /**
      * @brief rangeMin Permet de calculer la distance entre la case et le gendarme le plus proche
      * @param value Contient la donnée pour sélectionner la case voulue par rapport au pacman (gauche : -1, droite : 1, haut : -w, bas : w)
      * @return distance minimale
