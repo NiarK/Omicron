@@ -50,6 +50,7 @@ void GameController::reset()
 
     _pacman = this->generatePosition();//18
     _pacmanOld = _pacman;
+
     unsigned int ghost = _ghosts.size();
     for(unsigned int i = 0; i < ghost; ++i)
     {

@@ -13,13 +13,6 @@
 #include "view/option.h"
 #include "model/hypercube.h"
 
-/*
-enum class Actor
-{
-    PACMAN,
-    GHOST
-};
-//*/
 
 /**
  * @brief The GameController class est le controller abstrait qui gère la logic du jeu. Il faut en hériter pour implementer les fonction de mouvement des personnages.
