@@ -93,6 +93,7 @@ private:
      */
     virtual void reset();
 
+
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;

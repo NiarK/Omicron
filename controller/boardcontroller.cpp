@@ -447,6 +447,7 @@ void BoardController::moveGhost()
 {
     std::vector<int> espeG0;
     std::vector<int> espeG1;
+
     int range1 = range(_pacman, _ghosts[0]);
     int range2 = range(_pacman, _ghosts[1]);
     if( range1 == 1 )
@@ -483,6 +484,7 @@ void BoardController::moveGhost()
                     _runner = bestDiagonalGhost();
             }
             _selected = true;
+
             if(parityTest(_ghosts[_runner]) != parityTest(_pacman))
                 calculateMovement(_runner);
             else
