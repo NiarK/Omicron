@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <iostream>
 
 #include "view/mainwindow.h"

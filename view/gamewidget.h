@@ -35,6 +35,7 @@ public:
                                 std::vector<QGraphicsEllipseItem*>::iterator endVertexIt) const = 0;
     virtual void linkVertex(QGraphicsScene * _scene,
                             const std::vector<QGraphicsEllipseItem*> & vertex) const;
+    virtual void wheelEvent(QWheelEvent *event);
 
     static const int SPACING = 30;
     static const int RADIUS = 20;

@@ -61,7 +61,12 @@ GameWidget::~GameWidget()
     delete _gameController;
 }
 
-
+void GameWidget::wheelEvent(QWheelEvent *event)
+{
+    qreal d = (qreal)event->delta() / 1000 + 1;
+    qDebug() << d;
+    _view->scale(d,d);
+}
 
 void GameWidget::emitReturnClicked() const
 {
