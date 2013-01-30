@@ -9,6 +9,7 @@
 #include "controller/boardcontroller.h"
 #include "controller/cubecontroller.h"
 #include "controller/tesseractcontroller.h"
+#include "controller/donutcontroller.h"
 #include "view/option.h"
 #include "view/gameoption.h"
 

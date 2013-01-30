@@ -25,7 +25,7 @@ Menu::Menu(GameOption & option, QWidget *parent) :
     _rbTesseract = new QRadioButton("Tesseract", this);
     _rbDonut = new QRadioButton("Donut", this);
     _rbBoard->setChecked(true);
-    _rbDonut->setEnabled(false);
+    //_rbDonut->setEnabled(false);
 
     QVBoxLayout * lytField = new QVBoxLayout();
     lytField->addWidget(_rbBoard);
@@ -176,6 +176,10 @@ void Menu::emitFieldChoosed()
     {
         emit fieldChoosed(Field::TESSERACT);
     }
+    else if( _rbDonut->isChecked() )
+    {
+        emit fieldChoosed(Field::DONUT);
+    }
 }
 
 void Menu::emitBenchmarkLaunched()
@@ -199,58 +203,7 @@ void Menu::emitBenchmarkLaunched()
 
 void Menu::emitGameLaunched()
 {
-    //GameOption & option = GameOption();
-
-    /*GameType gt;
-    PacmanAI ai;
-
-    if( _rbAI->isChecked() )
-    {
-        gt = GameType::AI;
-    }
-    else if( _rbPlayerGhost->isChecked() )
-    {
-        gt = GameType::GHOST_PLAYER;
-    }
-    else if( _rbPlayerPacman->isChecked() )
-    {
-        gt = GameType::PACMAN_PLAYER;
-    }
-
-    if( _rbRandomAI->isChecked() )
-    {
-        ai = PacmanAI::RANDOM;
-    }
-    else if( _rbWiseAI->isChecked() )
-    {
-        ai = PacmanAI::WISE;
-    }
-
-
-    if( _rbBoard->isChecked() )
-    {
-        BoardOption option(gt, ai, 8, 8);
-        emit gameLaunched(option);
-    }
-    else if( _rbCube->isChecked() )
-    {
-        GameOption option(Field::CUBE, gt, ai);
-        emit gameLaunched(option);
-    }
-    else if( _rbTesseract->isChecked() )
-    {
-        TesseractOption option(gt, ai, TesseractDisplay::IN_3D);
-        emit gameLaunched(option);
-    }
-    else if( _rbDonut->isChecked() )
-    {
-        // do nothing
-    }*/
-
     emit gameLaunched();
-
-    //delete option; // pas sur de ce que je fais
-
 }
 
 void Menu::setPropertyWidget()
@@ -271,6 +224,10 @@ void Menu::setPropertyWidget()
     else if( _rbTesseract->isChecked() )
     {
         _property = new TesseractPropertyWidget(_option, this);
+    }
+    else if( _rbDonut->isChecked() )
+    {
+        _property = new DonutPropertyWidget(_option, this);
     }
 
     _lytProperty->addWidget(_property);

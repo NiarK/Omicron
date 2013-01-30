@@ -19,13 +19,14 @@
 #include "view/boardwidget.h"
 #include "view/cubewidget.h"
 #include "view/tesseractwidget.h"
+#include "view/donutwidget.h"
 #include "view/benchmarkwidget.h"
 
 
 // --- Temporaire --- //
-#include "controller/boardcontroller.h"
+/*#include "controller/boardcontroller.h"
 #include "controller/cubecontroller.h"
-#include "controller/tesseractcontroller.h"
+#include "controller/tesseractcontroller.h"*/
 
 class MainWindow : public QMainWindow
 {
@@ -45,7 +46,7 @@ public slots:
     //void initializeGame();
     void initializeGame();
     void initializeBenchmark();
-    void lanchBenchmark(Field f);
+    //void lanchBenchmark(Field f);
 
 protected:
 

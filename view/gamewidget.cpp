@@ -64,7 +64,6 @@ GameWidget::~GameWidget()
 void GameWidget::wheelEvent(QWheelEvent *event)
 {
     qreal d = (qreal)event->delta() / 1000 + 1;
-    qDebug() << d;
     _view->scale(d,d);
 }
 

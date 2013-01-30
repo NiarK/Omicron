@@ -23,14 +23,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeMenu()
 {
-    /*
-    if(_menu)
-    {
-        delete _menu;
-        _menu = 0;
-    }
-    */
-
     this->deleteCentralWidget();
 
     _menu = new Menu(_option, this);
@@ -41,30 +33,9 @@ void MainWindow::initializeMenu()
     QObject::connect(_menu, SIGNAL(gameLaunched()), this, SLOT(initializeGame()));
     QObject::connect(_menu, SIGNAL(benchmarkLaunched()), this, SLOT(initializeBenchmark()));
 }
-/*
-void MainWindow::initializeGame(Field field)
-{
-    _field = field;
-
-    this->initializeGame();
-}
-*/
 
 void MainWindow::initializeGame()
 {
-    /*
-    if(_game)
-    {
-        delete _game;
-        _game = 0;
-    }
-
-    if(_menu)
-    {
-        delete _menu;
-        _menu = 0;
-    }
-    */
     this->deleteCentralWidget();
 
     Field field = _option.getField();
@@ -88,6 +59,7 @@ void MainWindow::initializeGame()
         break;
     }
     case Field::DONUT:
+        _game = new DonutWidget(_option, this);
         break;
     }
 
@@ -101,14 +73,6 @@ void MainWindow::initializeGame()
 
 void MainWindow::initializeBenchmark()
 {
-    /*
-    if(_benchmark)
-    {
-        delete _benchmark;
-        _benchmark = 0;
-    }
-    */
-
     this->deleteCentralWidget();
 
     _benchmark = new BenchmarkWidget(_option, this);
@@ -118,43 +82,7 @@ void MainWindow::initializeBenchmark()
 
     QObject::connect(_benchmark, SIGNAL(terminated()), this,SLOT(initializeMenu()));
 }
-
 /*
-void MainWindow::initializeGame()
-{
-    if(_game)
-    {
-        delete _game;
-        _game = 0;
-    }
-
-    if(_menu)
-    {
-        delete _menu;
-        _menu = 0;
-    }
-
-    switch(_field)
-    {
-    case Field::BOARD:
-        _game = new BoardWidget(8,8,this);
-        break;
-    case Field::CUBE:
-        _game = new CubeWidget(this);
-        break;
-    case Field::TESSERACT:
-        _game = new TesseractWidget(this);
-        break;
-    }
-
-
-    this->setCentralWidget(_game);
-    this->centralWidget()->setFocus();
-
-    QObject::connect(_game, SIGNAL(returnClicked()), this, SLOT(initializeMenu()));
-    QObject::connect(_game, SIGNAL(restartClicked()), this, SLOT(initializeGame()));
-}
-*/
 void MainWindow::lanchBenchmark(Field f)
 {
     if(f == Field::BOARD)
@@ -172,25 +100,8 @@ void MainWindow::lanchBenchmark(Field f)
         TesseractController t;
         t.benchmark(10000);
     }
-    /*
-    switch(f)
-    {
-    case Field::BOARD:
-        BoardController b(8,8);
-        b.benchmark(10000);
-        break;
-    case Field::CUBE:
-        CubeController c;
-        c.benchmark(10000);
-        break;
-    case Field::TESSERACT:
-        TesseractController t;
-        t.benchmark(10000);
-        break;
-    }
-//*/
 }
-
+*/
 
 void MainWindow::deleteCentralWidget()
 {

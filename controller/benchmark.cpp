@@ -28,7 +28,7 @@ void Benchmark::initializeGame()
         _game = new TesseractController();
         break;
     case Field::DONUT:
-
+        _game = new DonutController();
         break;
     }
 }

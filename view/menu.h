@@ -17,6 +17,7 @@
 #include "view/boardpropertywidget.h"
 #include "view/cubepropertywidget.h"
 #include "view/tesseractpropertywidget.h"
+#include "view/donutpropertywidget.h"
 
 class Menu : public QWidget
 {

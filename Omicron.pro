@@ -31,7 +31,10 @@ SOURCES += main.cpp\
     view/cubepropertywidget.cpp \
     view/gameoption.cpp \
     view/benchmarkwidget.cpp \
-    controller/benchmark.cpp
+    controller/benchmark.cpp \
+    view/donutwidget.cpp \
+    controller/donutcontroller.cpp \
+    view/donutpropertywidget.cpp
 
 HEADERS  += \
     model/hypercube.h \
@@ -52,7 +55,10 @@ HEADERS  += \
     view/gameoption.h \
     view/option.h \
     view/benchmarkwidget.h \
-    controller/benchmark.h
+    controller/benchmark.h \
+    view/donutwidget.h \
+    controller/donutcontroller.h \
+    view/donutpropertywidget.h
 
 OTHER_FILES +=
 

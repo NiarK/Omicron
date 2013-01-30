@@ -1,4 +1,4 @@
-#include "gamecontroller.h"
+﻿#include "gamecontroller.h"
 
 GameController::GameController(const std::vector<unsigned int> &sizeByDimension, bool infinite, unsigned int ghost) :
     _pacman(0),
