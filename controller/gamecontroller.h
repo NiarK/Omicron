@@ -163,7 +163,9 @@ private:
     bool _gameOver;
     PacmanAI _ai;
 
-    //unsigned int _vertexNumber;
+
+    unsigned int _pacmanSave;
+    std::vector<unsigned int> _ghostsSave;
 };
 
 #endif // GAMECONTROLLER_H

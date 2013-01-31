@@ -9,7 +9,9 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
     _pacmanMoved(false),
     _movementCounter(0),
     _gameOver(false),
-    _ai(PacmanAI::RANDOM)
+    _ai(PacmanAI::RANDOM),
+    _pacmanSave(0),
+    _ghostsSave(ghost, 0)
   //_vertexNumber(0)
 {
     // Initialisation du random
@@ -48,15 +50,29 @@ GameController::~GameController()
 void GameController::reset()
 {
 
+    _pacman = 30;
     _pacman = this->generatePosition();
     _pacmanOld = _pacman;
+    _pacmanSave = _pacman;
     unsigned int ghost = _ghosts.size();
+    //*
     for(unsigned int i = 0; i < ghost; ++i)
     {
         _ghosts[i] = this->generatePosition();
         _ghostsOld[i] =  _ghosts[i];
+        _ghostsSave[i] =  _ghosts[i];
     }
-
+    //*/
+    /*
+    _ghosts[0] = 59;
+    _ghostsOld[0] = _ghosts[0];
+    _ghosts[1] = 61;
+    _ghostsOld[1] = _ghosts[1];
+    _ghosts[2] = 5;
+    _ghostsOld[2] = _ghosts[2];
+    _ghosts[3] = 58;
+    _ghostsOld[3] = _ghosts[3];
+    //*/
     _pacmanMoved = false;
     _movementCounter = 0;
 
@@ -202,6 +218,15 @@ bool GameController::nextMove()
 
 unsigned int GameController::getGhostMovementCounter() const
 {
+    if(_movementCounter > 19)
+    {
+        std::cout << "p:" << _pacmanSave
+                  << "g:" << _ghostsSave[0]
+                  << " " << _ghostsSave[1]
+                  << " " << _ghostsSave[2]
+                  << " " << _ghostsSave[3]
+                  << std::endl;
+    }
     return _movementCounter;
 }
 

@@ -15,6 +15,11 @@ public:
 
     virtual unsigned int range(unsigned int v1, unsigned int v2);
 
+    /**
+     * @brief reset réinitialise le jeu.
+     */
+    virtual void reset();
+
 private:
 
     /**
@@ -22,7 +27,9 @@ private:
      * @param place numéro case à tester
      * @return vrai si c'est dans la case en diagonale
      */
-    bool diagonalTest(unsigned int place);
+    bool isInPacmanDiagonal(unsigned int vertex);
+
+    unsigned int pivot();
 
     virtual void movePacman();
     virtual void moveGhost();

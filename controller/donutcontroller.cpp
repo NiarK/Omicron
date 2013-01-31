@@ -10,6 +10,29 @@ DonutController::DonutController() :
     _ghostPositionTable(4,0),
     _lastPlayed(0)
 {
+    this->reset();
+}
+
+void DonutController::reset()
+{
+    GameController::reset();
+
+    _chase = false;
+    _ghostPlaced = 1;
+    _lastPlayed = 0;
+
+    _optimumPosition.clear();
+    _optimumPosition.push_back(0);
+    _optimumPosition.push_back(0);
+    _optimumPosition.push_back(0);
+    _optimumPosition.push_back(0);
+
+    _ghostPositionTable.clear();
+    _ghostPositionTable.push_back(0);
+    _ghostPositionTable.push_back(0);
+    _ghostPositionTable.push_back(0);
+    _ghostPositionTable.push_back(0);
+
     _optimumPosition[0] = _ghosts[0];
 
     std::vector<unsigned int> ghostUnplaced;
@@ -156,11 +179,11 @@ void DonutController::movePacman()
 
 }
 
-bool DonutController::diagonalTest(unsigned int place)
+bool DonutController::isInPacmanDiagonal(unsigned int vertex)
 {
-    if(range(place,_pacman) == 2
-            && _pacman % _width != place % _width
-            && _pacman / _width != place / _width)
+    if(range(vertex,_pacman) == 2
+            && _pacman % _width != vertex % _width
+            && _pacman / _width != vertex / _width)
         return true;
     return false;
 }
@@ -193,17 +216,18 @@ void DonutController::moveGhost()
         }
     }
 
+    unsigned int minRange = this->getVertexNumber();
+    unsigned int range;
     // gestion de deplacement
     if( !_chase )
     {
         std::vector<unsigned int> edges = this->getEdges(_ghosts[_ghostPositionTable[_ghostPlaced]]);
         unsigned int size = edges.size();
-        unsigned int minRange = this->getVertexNumber();
         bool isAnOccupedPosition;
 
         for(unsigned int e = 0; e < size; ++e)
         {
-            unsigned int range = this->range(edges[e], _optimumPosition[_ghostPlaced]);
+            range = this->range(edges[e], _optimumPosition[_ghostPlaced]);
             isAnOccupedPosition = false;
 
             for(unsigned int g = 0; g < ghostNumber && !isAnOccupedPosition; ++g)
@@ -219,7 +243,102 @@ void DonutController::moveGhost()
     }
     else
     {
-        std::cout << "Coucou moi c'est Boudou "<< std::endl;
+        unsigned int minGhost = ghostNumber;
+        unsigned int rangeLast = 0;
+        bool moved = false;
+        bool diagoPossible = false;
+        minRange = this->getVertexNumber();
+        // permet d'obtenir le ghost le plus près sans qu'il soit à deux de distance du pacman
+        for(unsigned int g = 0; g < ghostNumber; ++g)
+        {
+            range = this->range(_ghosts[g], _pacman);
+            if(minRange >= range && g != _lastPlayed && range > 2)
+            {
+                if(range == 3 && ( _ghosts[g] % _width != _pacman % _width)
+                        && ( _ghosts[g] / _width != _pacman / _width))
+                {
+                    diagoPossible = true;
+                }
+                unsigned int r = 0;
+                r = this->range(_ghosts[_lastPlayed],_ghosts[g]);
+                if(minRange > range || r > rangeLast)
+                {
+                    minRange = range;
+                    minGhost = g;
+                    rangeLast = r;
+                    moved = true;
+                }
+            }
+        }
+        unsigned int rangeLastPacman = this->range(_ghosts[_lastPlayed], _pacman);
+        if(!moved)
+        {
+            minRange = rangeLastPacman;
+            minGhost = _lastPlayed;
+        }
+        if(!diagoPossible && rangeLastPacman == 3 && ( _ghosts[_lastPlayed] % _width != _pacman % _width)
+                && ( _ghosts[_lastPlayed] / _width != _pacman / _width))
+        {
+            minRange = rangeLastPacman;
+            minGhost = _lastPlayed;
+        }
 
+
+        std::vector<unsigned int> edges = this->getEdges(_ghosts[minGhost]);
+        unsigned int size = edges.size();
+        moved = false;
+
+
+        for(unsigned int e = 0; e < size && moved == false; ++e)
+        {
+            if(isInPacmanDiagonal(edges[e]))
+            {
+                _ghosts[minGhost] = edges[e];
+                moved = true;
+            }
+        }
+
+        for(unsigned int e = 0; e < size && moved == false; ++e)
+        {
+            range = this->range(edges[e], _pacman);
+
+            int w = (int)(edges[e] % _width) - (int)(_pacman % _width);
+            int h = (int)(edges[e] / _width) - (int)(_pacman / _width);
+            w = abs(w);
+            h = abs(h);
+            float val = (float) w / (float) h ;
+
+            if(minRange > range)
+            {
+                _ghosts[minGhost] = edges[e];
+                if( val == 1 )
+                    moved = true;
+            }
+        }
+
+        _lastPlayed = minGhost;
     }
+}
+
+unsigned int DonutController::pivot()
+{
+    unsigned int ghostNumber = _ghosts.size();
+
+    for(unsigned int g = 0; g < ghostNumber; ++g)
+    {
+        for(unsigned int gh = g + 1; gh < ghostNumber; ++g)
+        {
+            bool sameLine = ( _ghosts[g] / _width == _ghosts[gh] / _width );
+            bool sameColumn = ( _ghosts[g] % _width == _ghosts[gh] % _width );
+            bool rangeLine4 = ( abs( (int)(_ghosts[g] % _width) - (int)(_ghosts[gh] % _width) ) == 4 );
+            bool rangeColumn4 = ( abs( (int)(_ghosts[g] / _width) - (int)(_ghosts[gh] / _width) ) == 4 );
+
+            if( ( rangeLine4 || sameLine ) && ( rangeColumn4 || sameColumn ) )
+            {
+                return g;
+            }
+        }
+    }
+
+    return 0;
 }
