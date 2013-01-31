@@ -16,6 +16,14 @@ public:
     virtual unsigned int range(unsigned int v1, unsigned int v2);
 
 private:
+
+    /**
+     * @brief diagonalTest test si la case passée en paramètre est dans la diagonale (sans case entre) du pacman
+     * @param place numéro case à tester
+     * @return vrai si c'est dans la case en diagonale
+     */
+    bool diagonalTest(unsigned int place);
+
     virtual void movePacman();
     virtual void moveGhost();
 
@@ -36,12 +44,10 @@ private:
      * @brief _ghostPlaced Nombre de ghosts placé en position optimale.
      */
     unsigned int _ghostPlaced;
-    /**
-     * @brief diagonalTest test si la case passée en paramètre est dans la diagonale (sans case entre) du pacman
-     * @param place numéro case à tester
-     * @return vrai si c'est dans la case en diagonale
-     */
-    bool diagonalTest(unsigned int place);
+
+    std::vector<unsigned int> _ghostPositionTable;
+
+    unsigned int _lastPlayed;
 };
 
 #endif // DONUTCONTROLLER_H
