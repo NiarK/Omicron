@@ -5,5 +5,6 @@
         <file>Pictures/pacman.png</file>
         <file>Pictures/cube.png</file>
         <file>Pictures/tesseract.png</file>
+        <file>Pictures/donut.png</file>
     </qresource>
 </RCC>

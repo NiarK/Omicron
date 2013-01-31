@@ -9,10 +9,7 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
     _pacmanMoved(false),
     _movementCounter(0),
     _gameOver(false),
-    _ai(PacmanAI::RANDOM),
-    _pacmanSave(0),
-    _ghostsSave(ghost, 0)
-  //_vertexNumber(0)
+    _ai(PacmanAI::RANDOM)
 {
     // Initialisation du random
     QTime time = QTime::currentTime();
@@ -21,24 +18,6 @@ GameController::GameController(const std::vector<unsigned int> &sizeByDimension,
     _matrix = new HyperCube(sizeByDimension, infinite);
 
     this->reset();
-    /*
-    _pacman = this->generatePosition();
-    for(unsigned int i = 0; i < ghost; ++i)
-    {
-        _ghosts.push_back(this->generatePosition());
-        _ghostsOld.push_back(_ghosts.back());
-    }
-    //*/
-    /*
-    for(unsigned int y = 0; y < _matrix->size1(); ++y)
-    {
-        for(unsigned int x = 0; x < _matrix->size2(); ++x)
-        {
-            std::cout << (*_matrix)(y,x);
-        }
-        std::cout << std::endl;
-    }
-    //*/
 }
 
 GameController::~GameController()
@@ -50,29 +29,15 @@ GameController::~GameController()
 void GameController::reset()
 {
 
-    _pacman = 30;
     _pacman = this->generatePosition();
     _pacmanOld = _pacman;
-    _pacmanSave = _pacman;
     unsigned int ghost = _ghosts.size();
-    //*
+
     for(unsigned int i = 0; i < ghost; ++i)
     {
         _ghosts[i] = this->generatePosition();
         _ghostsOld[i] =  _ghosts[i];
-        _ghostsSave[i] =  _ghosts[i];
     }
-    //*/
-    /*
-    _ghosts[0] = 59;
-    _ghostsOld[0] = _ghosts[0];
-    _ghosts[1] = 61;
-    _ghostsOld[1] = _ghosts[1];
-    _ghosts[2] = 5;
-    _ghostsOld[2] = _ghosts[2];
-    _ghosts[3] = 58;
-    _ghostsOld[3] = _ghosts[3];
-    //*/
     _pacmanMoved = false;
     _movementCounter = 0;
 
@@ -218,15 +183,6 @@ bool GameController::nextMove()
 
 unsigned int GameController::getGhostMovementCounter() const
 {
-    if(_movementCounter > 19)
-    {
-        std::cout << "p:" << _pacmanSave
-                  << "g:" << _ghostsSave[0]
-                  << " " << _ghostsSave[1]
-                  << " " << _ghostsSave[2]
-                  << " " << _ghostsSave[3]
-                  << std::endl;
-    }
     return _movementCounter;
 }
 

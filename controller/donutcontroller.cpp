@@ -34,6 +34,7 @@ void DonutController::reset()
     _ghostPositionTable.push_back(0);
 
     _optimumPosition[0] = _ghosts[0];
+    _optimumPosition[0] = _ghosts[this->pivot()];
 
     std::vector<unsigned int> ghostUnplaced;
     std::vector<unsigned int> positionUnused;
@@ -326,10 +327,11 @@ unsigned int DonutController::pivot()
 
     for(unsigned int g = 0; g < ghostNumber; ++g)
     {
-        for(unsigned int gh = g + 1; gh < ghostNumber; ++g)
+        for(unsigned int gh = g + 1; gh < ghostNumber; ++gh)
         {
             bool sameLine = ( _ghosts[g] / _width == _ghosts[gh] / _width );
             bool sameColumn = ( _ghosts[g] % _width == _ghosts[gh] % _width );
+
             bool rangeLine4 = ( abs( (int)(_ghosts[g] % _width) - (int)(_ghosts[gh] % _width) ) == 4 );
             bool rangeColumn4 = ( abs( (int)(_ghosts[g] / _width) - (int)(_ghosts[gh] / _width) ) == 4 );
 
