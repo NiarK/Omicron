@@ -16,7 +16,7 @@ DonutController::DonutController() :
 void DonutController::reset()
 {
     GameController::reset();
-
+    //initialisation des paramètres
     _chase = false;
     _ghostPlaced = 1;
     _lastPlayed = 0;
@@ -62,6 +62,7 @@ void DonutController::reset()
         _optimumPosition[2] = _optimumPosition[0] - _width / 2;
         _optimumPosition[3] = _optimumPosition[1] - _width / 2;
     }
+
     // on crée un tableau pour savoir quels ghosts on doit déplacer pour arriver à la position voulue
     for(unsigned int g = 0; g < ghostNumber; ++g)
     {
@@ -104,7 +105,7 @@ void DonutController::reset()
     unsigned int puSize = positionUnused.size();
     unsigned int r;
     unsigned int rangeMin, opti;
-
+    // On attribut le bon ghost à la position qu'il doit rejoindre dans les pivots
     for( unsigned int pu = 0; pu < puSize; ++pu )
     {
         guSize = ghostUnplaced.size();
@@ -137,7 +138,8 @@ unsigned int DonutController::range(unsigned int v0, unsigned int v1)
     unsigned int middleY = _height / 2;
     unsigned int rangeX = (unsigned int)abs( (int)(v1 % _width) - (int)(v0 % _width) );
     unsigned int rangeY = (unsigned int)abs( (int)(v1 / _width) - (int)(v0 / _width) );
-
+    // Si la distance calculée est supérieure à la moitié, alors il est plus
+    // rapide de passer par l'extérieur de la map
     if ( rangeX > middleX )
     {
         rangeX = _width - rangeX;
@@ -159,7 +161,7 @@ void DonutController::movePacman()
 
     unsigned int edgeNumber = edges.size();
     unsigned int ghostNumber = _ghosts.size();
-
+    //Parcourt des différents edges, ça vas sur celui qui est le moins proche des gendarmes
     for(unsigned int e = 0; e < edgeNumber; ++e)
     {
         minRange = vertexNumber;
@@ -182,6 +184,8 @@ void DonutController::movePacman()
 
 bool DonutController::isInPacmanDiagonal(unsigned int vertex)
 {
+    // si il est à deux de distance et qu'il est pas dans la même ligne ou même colonne
+    // alors il est en diagonale directe
     if(range(vertex,_pacman) == 2
             && _pacman % _width != vertex % _width
             && _pacman / _width != vertex / _width)
@@ -202,7 +206,7 @@ void DonutController::moveGhost()
         }
     }
 
-    // gestion de focus
+    // gestion de focus par rapport aux ghosts déjà en place
     if( ! _chase )
     {
         // Si le ghost est déjà placé
@@ -222,6 +226,7 @@ void DonutController::moveGhost()
     // gestion de deplacement
     if( !_chase )
     {
+        // Déplacement des ghosts vers les positions du pivot
         std::vector<unsigned int> edges = this->getEdges(_ghosts[_ghostPositionTable[_ghostPlaced]]);
         unsigned int size = edges.size();
         bool isAnOccupedPosition;
@@ -255,6 +260,7 @@ void DonutController::moveGhost()
             range = this->range(_ghosts[g], _pacman);
             if(minRange >= range && g != _lastPlayed && range > 2)
             {
+                // On test si il peut se mettre dans la diagonale du pacman ou non
                 if(range == 3 && ( _ghosts[g] % _width != _pacman % _width)
                         && ( _ghosts[g] / _width != _pacman / _width))
                 {
@@ -262,6 +268,8 @@ void DonutController::moveGhost()
                 }
                 unsigned int r = 0;
                 r = this->range(_ghosts[_lastPlayed],_ghosts[g]);
+                // On garde le plus proche du pacman et si il y en a à même distance
+                // on prend le plus loin du dernier ghost à avoir joué
                 if(minRange > range || r > rangeLast)
                 {
                     minRange = range;
@@ -272,11 +280,14 @@ void DonutController::moveGhost()
             }
         }
         unsigned int rangeLastPacman = this->range(_ghosts[_lastPlayed], _pacman);
+        // Si aucun n'a bougé c'est qu'ils sont tous à deux du pacman donc on bouge le last
         if(!moved)
         {
             minRange = rangeLastPacman;
             minGhost = _lastPlayed;
         }
+        // Si aucun autre ne peut se mettre en diagonale et que le last peut
+        // il le fait
         if(!diagoPossible && rangeLastPacman == 3 && ( _ghosts[_lastPlayed] % _width != _pacman % _width)
                 && ( _ghosts[_lastPlayed] / _width != _pacman / _width))
         {
@@ -289,29 +300,32 @@ void DonutController::moveGhost()
         unsigned int size = edges.size();
         moved = false;
 
-
+        // Parcourt des possibilitées (on stop dès qu'on a la diagonale)
         for(unsigned int e = 0; e < size && moved == false; ++e)
         {
+            // Si la case est dans la diagonale direct du pacman il y va
             if(isInPacmanDiagonal(edges[e]))
             {
                 _ghosts[minGhost] = edges[e];
                 moved = true;
             }
         }
-
+        // Parcourt des possibilitées siaucun n'est en diagonale
         for(unsigned int e = 0; e < size && moved == false; ++e)
         {
+            // On calcule la distance du pacman à la possibilitée
             range = this->range(edges[e], _pacman);
-
+            // pour calculer si on est dans la diagonale (pas forcément collée)
             int w = (int)(edges[e] % _width) - (int)(_pacman % _width);
             int h = (int)(edges[e] / _width) - (int)(_pacman / _width);
             w = abs(w);
             h = abs(h);
             float val = (float) w / (float) h ;
-
+            //On met le ghost dans la position si c'est plus proche qu'avant
             if(minRange > range)
             {
                 _ghosts[minGhost] = edges[e];
+                // on arrête la boucle que si c'est dans la diagonale, sinon on test quand même les autres
                 if( val == 1 )
                     moved = true;
             }
@@ -327,6 +341,8 @@ unsigned int DonutController::pivot()
 
     for(unsigned int g = 0; g < ghostNumber; ++g)
     {
+        // Il n'est pas utile de parcourir tous les ghosts ici, seulement ceux qui n'ont pas encore
+        // été testé
         for(unsigned int gh = g + 1; gh < ghostNumber; ++gh)
         {
             bool sameLine = ( _ghosts[g] / _width == _ghosts[gh] / _width );
@@ -334,7 +350,9 @@ unsigned int DonutController::pivot()
 
             bool rangeLine4 = ( abs( (int)(_ghosts[g] % _width) - (int)(_ghosts[gh] % _width) ) == 4 );
             bool rangeColumn4 = ( abs( (int)(_ghosts[g] / _width) - (int)(_ghosts[gh] / _width) ) == 4 );
-
+            // Si deux au moins sont dans les conditions on met le pivot sur l'un des deux.
+            // On peut savoir facilement si ils le sont avec le test suivant (il vérifie
+            // les trois autres positions)
             if( ( rangeLine4 || sameLine ) && ( rangeColumn4 || sameColumn ) )
             {
                 return g;
