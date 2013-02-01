@@ -13,13 +13,6 @@
 #include "view/option.h"
 #include "model/hypercube.h"
 
-/*
-enum class Actor
-{
-    PACMAN,
-    GHOST
-};
-//*/
 
 /**
  * @brief The GameController class est le controller abstrait qui gère la logic du jeu. Il faut en hériter pour implementer les fonction de mouvement des personnages.
@@ -127,9 +120,19 @@ protected:
      */
     HyperCube * getAdjacencyMatrix();
 
+    /**
+     * @brief _pacman Position du pacman sur la map.
+     */
     unsigned int _pacman;
+
+    /**
+     * @brief _ghosts Position des ghosts sur la map.
+     */
     std::vector<unsigned int> _ghosts;
 
+    /**
+     * @brief _matrix Matrice d'adjacence du graphe représentant la map.
+     */
     HyperCube * _matrix;
 
 private:

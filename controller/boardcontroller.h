@@ -93,12 +93,25 @@ private:
      */
     virtual void reset();
 
-
+    /**
+     * @brief createSizeByDimensionVector Créer un vector contenant la taille pour un hypercube de dimension 2 pour chaque dimension.
+     * @param width Largeur de la map.
+     * @param height Hauteur de la map.
+     * @return Un vector de 2 cases.
+     */
     std::vector<unsigned int> createSizeByDimensionVector(unsigned int width, unsigned int height);
 
     unsigned int _width;
     unsigned int _height;
+
+    /**
+     * @brief _runner Contient l'index du ghosts qui chasse le pacmane.
+     */
     unsigned int _runner;
+
+    /**
+     * @brief _selected Un booléen permettant de savoir si le _runner a été selectionner.
+     */
     bool _selected;
 };
 

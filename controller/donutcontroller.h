@@ -13,6 +13,12 @@ public:
     DonutController();
     virtual ~DonutController();
 
+    /**
+     * @brief range Calcule la distance entre 2 sommets.
+     * @param v1 sommet 1
+     * @param v2 sommet 2
+     * @return Distance entre sommet 1 et 2.
+     */
     virtual unsigned int range(unsigned int v1, unsigned int v2);
 
     /**
@@ -29,9 +35,20 @@ private:
      */
     bool isInPacmanDiagonal(unsigned int vertex);
 
+    /**
+     * @brief pivot Retourne l'index du ghost qui est le plus indiqué pour calculez la position optimale des ghosts dans la map.
+     * @return L'index d'un ghost.
+     */
     unsigned int pivot();
 
+    /**
+     * @brief movePacman Gère le mouvement du pacman.
+     */
     virtual void movePacman();
+
+    /**
+     * @brief moveGhost Gère les mouvement des ghosts.
+     */
     virtual void moveGhost();
 
     unsigned int _width;
@@ -52,8 +69,14 @@ private:
      */
     unsigned int _ghostPlaced;
 
+    /**
+     * @brief _ghostPositionTable Table de correspondance entre les ghosts et leur position optimale.
+     */
     std::vector<unsigned int> _ghostPositionTable;
 
+    /**
+     * @brief _lastPlayed Index du dernier ghost ayant joué.
+     */
     unsigned int _lastPlayed;
 };
 

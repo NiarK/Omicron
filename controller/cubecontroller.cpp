@@ -38,9 +38,10 @@ int CubeController::range(int pos1,int pos2, int dist,int dimension){
 }
 
 
-int CubeController::rangeMin(int pacman){
-    int rangeGhost1 = range(pacman, _ghosts[0], 0, 3);
-    int rangeGhost2 = range(pacman, _ghosts[1], 0, 3);
+unsigned int CubeController::rangeMin(unsigned int vertex)
+{
+    int rangeGhost1 = range(vertex, _ghosts[0], 0, 3);
+    int rangeGhost2 = range(vertex, _ghosts[1], 0, 3);
     if( rangeGhost1 > rangeGhost2)
         return rangeGhost2;
     else
